@@ -1,0 +1,55 @@
+1.0.1: 'First version of Eventsextension'
+1.0.2:
+    - 'Created table pensoft_eventsextension_status'
+    - builder_table_create_pensoft_eventsextension_status.php
+1.0.3:
+    - 'Created table pensoft_eventsextension_tag'
+    - builder_table_create_pensoft_eventsextension_tag.php
+1.0.4:
+    - 'Created table pensoft_eventsextension_event_tags'
+    - builder_table_create_pensoft_eventsextension_event_tags.php
+1.0.5:
+    - 'Created table pensoft_eventsextension_ticket'
+    - builder_table_create_pensoft_eventsextension_ticket.php
+1.0.6:
+    - 'Created table pensoft_eventsextension_codes_has_tickets'
+    - builder_table_create_pensoft_eventsextension_codes_has_tickets.php
+1.0.7:
+    - 'Created table pensoft_eventsextension_order_answer'
+    - builder_table_create_pensoft_eventsextension_order_answer.php
+1.0.8:
+    - 'Created table pensoft_eventsextension_order_question'
+    - builder_table_create_pensoft_eventsextension_order_question.php
+1.0.9:
+    - 'Created table pensoft_eventsextension_order_question'
+    - update_entries.php
+1.0.10:
+    - 'Created table pensoft_eventsextension_attendee_answer'
+    - builder_table_create_pensoft_eventsextension_attendee_answer.php
+1.0.11:
+    - 'Created table pensoft_eventsextension_attendee_question'
+    - builder_table_create_pensoft_eventsextension_attendee_question.php
+1.0.12:
+    - 'Created table pensoft_eventsextension_attendee'
+    - builder_table_create_pensoft_eventsextension_attendee.php
+1.0.13:
+    - 'Created table pensoft_eventsextension_order'
+    - builder_table_create_pensoft_eventsextension_order.php
+1.0.14:
+    - 'Created table pensoft_eventsextension_code'
+    - builder_table_create_pensoft_eventsextension_code.php
+1.0.15:
+    - 'Created table pensoft_eventsextension_order_tickets'
+    - builder_table_create_pensoft_eventsextension_order_tickets.php
+1.0.16:
+    - 'Created table pensoft_eventsextension_order_codes'
+    - builder_table_create_pensoft_eventsextension_order_codes.php
+1.0.17:
+    - 'Created table pensoft_eventsextension_attendee_profile'
+    - builder_table_create_pensoft_eventsextension_attendee_profile.php
+1.0.18:
+    - 'Created table pensoft_eventsextension_attendee_address'
+    - builder_table_create_pensoft_eventsextension_attendee_address.php
+1.0.19:
+    - 'Created table pensoft_eventsextension_attendee_email_logs'
+    - builder_table_create_pensoft_eventsextension_attendee_email_logs.php
