@@ -97,12 +97,6 @@ class Plugin extends PluginBase
 						'type' => 'checkbox',
 						'default' => false,
 					],
-					'active' => [
-						'label' => 'Active',
-						'span' => 'auto',
-						'type' => 'checkbox',
-						'default' => true,
-					],
 					'capacity' => [
 						'label' => 'Capacity',
 						'span' => 'auto',

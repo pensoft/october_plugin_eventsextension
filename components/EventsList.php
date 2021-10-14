@@ -23,7 +23,7 @@ class EventsList extends ComponentBase
 
 	public function getEvents()
 	{
-		$events = Entry::where('active', true)->orderBy('start', 'desc')->get();
+		$events = Entry::orderBy('start', 'desc')->get();
 		return $events;
 	}
 }

@@ -94,4 +94,6 @@
     - 'Mathod getEventId'
 1.0.34:
     - 'New active field'
-    - update_entries_active.php
+1.0.35:
+    - 'New active field v2'
+    - update_entries_active_new.php
