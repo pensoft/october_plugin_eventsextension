@@ -97,3 +97,5 @@
 1.0.35:
     - 'New active field v2'
     - update_entries_active_new.php
+1.0.36:
+    - 'Add the field'
