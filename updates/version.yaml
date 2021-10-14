@@ -92,3 +92,6 @@
     - builder_table_update_pensoft_eventsextension_attendee_3.php
 1.0.33:
     - 'Mathod getEventId'
+1.0.34:
+    - 'New active field'
+    - update_entries_active.php
