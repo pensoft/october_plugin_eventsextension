@@ -1,6 +1,7 @@
 <?php namespace Pensoft\Eventsextension\Components;
 
 use Cms\Classes\ComponentBase;
+use Exception;
 use Pensoft\Calendar\Models\Entry;
 use Pensoft\Eventsextension\Models\Attendee;
 use Pensoft\Eventsextension\Models\AttendeeAnswer;
@@ -21,9 +22,17 @@ class EventsRegisterForm extends ComponentBase
         ];
     }
 
+	public function getEventId(){
+		try {
+			return $this->param('event_id');
+		} catch (\Exception $e) {
+			return null;
+		}
+	}
+
     public function defineProperties()
     {
-        $this->page['event'] = (new Entry())::where('id', $this->param('event_id'))->first();
+        $this->page['event'] = (new Entry())::where('id', $this->getEventId())->first();
         $this->page['message'] = \Session::get('message');
     	return [];
     }
@@ -31,7 +40,7 @@ class EventsRegisterForm extends ComponentBase
 	public function getFormFields()
 	{
 		$questions = new OrderQuestion();
-		$eventId = $this->param('event_id');
+		$eventId = $this->getEventId();
 		$questions = $questions::where('event_id', $eventId)
 			->where('active', true)
 			->orderBy('order', 'asc')
@@ -51,7 +60,7 @@ class EventsRegisterForm extends ComponentBase
 	public function onSubmit()
 	{
 		$questions = new OrderQuestion();
-		$eventId = $this->param('event_id');
+		$eventId = $this->getEventId();
 		$questions = $questions::where('event_id', $eventId);
 
 		$allQuestions = $questions->get()->toArray();
