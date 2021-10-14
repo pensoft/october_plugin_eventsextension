@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Order
+
+# Model Form Field configuration
+form: $/pensoft/eventsextension/models/order/fields.yaml
+
+# Model Class name
+modelClass: Pensoft\Eventsextension\Models\Order
+
+# Default redirect location
+defaultRedirect: pensoft/eventsextension/orders
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: pensoft/eventsextension/orders/update/:id
+    redirectClose: pensoft/eventsextension/orders
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: pensoft/eventsextension/orders
+    redirectClose: pensoft/eventsextension/orders
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

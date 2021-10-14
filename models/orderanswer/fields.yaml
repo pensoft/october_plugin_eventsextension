@@ -1,0 +1,22 @@
+fields:
+    order_question:
+        label: 'Order Question'
+        nameFrom: question
+        descriptionFrom: description
+        span: auto
+        type: relation
+    answer:
+        label: Answer
+        size: ''
+        span: auto
+        type: textarea
+    selected:
+        label: Selected
+        span: auto
+        type: switch
+    order:
+        label: Order
+        span: auto
+        default: '1'
+        type: text
+        comment: 'small integer'

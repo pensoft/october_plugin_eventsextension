@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Attendee
+
+# Model Form Field configuration
+form: $/pensoft/eventsextension/models/attendee/fields.yaml
+
+# Model Class name
+modelClass: Pensoft\Eventsextension\Models\Attendee
+
+# Default redirect location
+defaultRedirect: pensoft/eventsextension/attendees
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: pensoft/eventsextension/attendees/update/:id
+    redirectClose: pensoft/eventsextension/attendees
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: pensoft/eventsextension/attendees
+    redirectClose: pensoft/eventsextension/attendees
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

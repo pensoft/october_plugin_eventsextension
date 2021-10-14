@@ -1,6 +1,8 @@
 <?php namespace Pensoft\Eventsextension;
 
 use Backend;
+use Pensoft\Calendar\Controllers\Entries;
+use Pensoft\Calendar\Models\Entry;
 use System\Classes\PluginBase;
 
 /**
@@ -8,6 +10,8 @@ use System\Classes\PluginBase;
  */
 class Plugin extends PluginBase
 {
+
+	public $require = ['Pensoft.Calendar', 'Rainlab.Location'];
     /**
      * Returns information about this plugin.
      *
@@ -19,7 +23,7 @@ class Plugin extends PluginBase
             'name'        => 'Eventsextension',
             'description' => 'No description provided yet...',
             'author'      => 'Pensoft',
-            'icon'        => 'icon-leaf'
+            'icon'        => 'icon-calendar'
         ];
     }
 
@@ -38,10 +42,98 @@ class Plugin extends PluginBase
      *
      * @return array
      */
-    public function boot()
-    {
 
-    }
+	public function boot()
+	{
+		//Extending Entry Model and add status relation
+		Entry::extend(function($model) {
+			if (!$model instanceof \Pensoft\Calendar\Models\Entry) {
+				return;
+			}
+
+			$model->belongsTo['status'] = [
+				'Pensoft\Eventsextension\Models\Status'
+			];
+		});
+
+		if(class_exists('\Pensoft\Calendar\Controllers\Entries')){
+			Entries::extendFormFields(function($form, $model){
+				if (!$model instanceof \Pensoft\Calendar\Models\Entry) {
+					return;
+				}
+
+				$form->addFields([
+					'summary' => [
+						'label' => 'Summary',
+						'span' => 'auto',
+						'type' => 'richeditor',
+						'size' => 'large',
+						'required' => 1
+					],
+					'currency' => [
+						'label' => 'Currency',
+						'span' => 'auto',
+						'type' => 'text',
+						'size' => 'autogrow',
+						'comment' => 'EUR, GBP, USD, BGN',
+						'required' => 1,
+						'default' => 'EUR'
+					],
+					'invite_only' => [
+						'label' => 'Invite only',
+						'span' => 'auto',
+						'type' => 'checkbox',
+						'default' => false,
+					],
+					'show_remaining' => [
+						'label' => 'Show remaining',
+						'span' => 'auto',
+						'type' => 'checkbox',
+						'default' => false,
+					],
+					'online_event' => [
+						'label' => 'Online event',
+						'span' => 'auto',
+						'type' => 'checkbox',
+						'default' => false,
+					],
+					'capacity' => [
+						'label' => 'Capacity',
+						'span' => 'auto',
+						'type' => 'text',
+						'default' => '1',
+						'required' => 1
+					],
+					'password' => [
+						'label' => 'Password',
+						'span' => 'auto',
+						'type' => 'text',
+					],
+					'organizer' => [
+						'label' => 'Organizer',
+						'span' => 'auto',
+						'type' => 'text',
+					],
+					'status' => [
+						'label' => 'Status',
+//						'emptyOption' => '-- choose --',
+						'span'  => 'auto',
+						'type'  => 'relation',
+						'select'  => 'name',
+						'options' => Models\Status::all()->lists('name', 'id'),
+						'nameFrom' => 'name'
+					],
+
+				]);
+
+				$form->removeField('color');
+				$form->removeField('index');
+				$form->removeField('identifier');
+				$form->removeField('all_day');
+
+			});
+		}
+	}
 
     /**
      * Registers any front-end components implemented in this plugin.
@@ -50,10 +142,10 @@ class Plugin extends PluginBase
      */
     public function registerComponents()
     {
-        return []; // Remove this line to activate
 
         return [
-            'Pensoft\Eventsextension\Components\MyComponent' => 'myComponent',
+            'Pensoft\Eventsextension\Components\EventsList' => 'EventsList',
+            'Pensoft\Eventsextension\Components\EventsRegisterForm' => 'EventsRegisterForm',
         ];
     }
 

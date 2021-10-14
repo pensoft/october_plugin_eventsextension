@@ -1,0 +1,51 @@
+columns:
+    id:
+        label: id
+        type: number
+        searchable: true
+        sortable: true
+    name:
+        label: Name
+        type: text
+        searchable: true
+        sortable: true
+    first_name:
+        label: 'First name'
+        type: text
+        searchable: true
+        sortable: true
+    last_name:
+        label: 'Last name'
+        type: text
+        searchable: true
+        sortable: true
+    email:
+        label: Email
+        type: text
+        searchable: true
+        sortable: true
+    status:
+        label: Status
+        type: text
+        searchable: true
+        sortable: true
+    created_at:
+        label: Created
+        type: datetime
+        searchable: true
+        sortable: true
+    subtotal:
+        label: Subtotal
+        type: text
+        searchable: true
+        sortable: true
+    fees:
+        label: Fees
+        type: text
+        searchable: true
+        sortable: true
+    total:
+        label: Total
+        type: text
+        searchable: true
+        sortable: true

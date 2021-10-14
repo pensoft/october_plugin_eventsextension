@@ -1,0 +1,17 @@
+fields:
+    attendee_question:
+        label: 'Attendee question'
+        nameFrom: question
+        descriptionFrom: description
+        span: auto
+        type: relation
+    answer:
+        label: Answer
+        span: auto
+        type: text
+    order:
+        label: 'Sort order'
+        span: auto
+        default: '1'
+        type: text
+        comment: 'small int'

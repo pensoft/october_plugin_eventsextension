@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Ticket
+
+# Model Form Field configuration
+form: $/pensoft/eventsextension/models/ticket/fields.yaml
+
+# Model Class name
+modelClass: Pensoft\Eventsextension\Models\Ticket
+
+# Default redirect location
+defaultRedirect: pensoft/eventsextension/tickets
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: pensoft/eventsextension/tickets/update/:id
+    redirectClose: pensoft/eventsextension/tickets
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: pensoft/eventsextension/tickets
+    redirectClose: pensoft/eventsextension/tickets
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

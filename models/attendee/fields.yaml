@@ -1,0 +1,17 @@
+fields:
+    order:
+        label: Order
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    event:
+        label: Event
+        nameFrom: title
+        descriptionFrom: description
+        span: auto
+        type: relation
+    status:
+        label: Status
+        span: auto
+        type: text

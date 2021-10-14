@@ -1,0 +1,22 @@
+columns:
+    id:
+        label: id
+        type: number
+        searchable: true
+        sortable: true
+    event:
+        label: Event
+        relation: event
+        select: title
+        searchable: true
+        sortable: true
+    question:
+        label: question
+        type: text
+        searchable: true
+        sortable: true
+    order:
+        label: order
+        type: text
+        searchable: true
+        sortable: true

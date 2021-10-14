@@ -1,0 +1,33 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    email:
+        label: Email
+        span: auto
+        type: text
+    first_name:
+        label: 'First name'
+        span: auto
+        type: text
+    last_name:
+        label: 'Last name'
+        span: auto
+        type: text
+    status:
+        label: Status
+        span: auto
+        type: text
+    subtotal:
+        label: Subtotal
+        span: auto
+        type: text
+    fees:
+        label: Fees
+        span: auto
+        type: text
+    total:
+        label: Total
+        span: auto
+        type: text

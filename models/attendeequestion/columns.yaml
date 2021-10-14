@@ -1,0 +1,49 @@
+columns:
+    event:
+        label: event
+        relation: event
+        select: title
+        searchable: true
+        sortable: true
+    attendee:
+        label: 'Attendee'
+        relation: attendee
+        select: id
+        searchable: true
+        sortable: true
+    order_question:
+        label: 'Order question'
+        relation: order_question
+        select: question
+        searchable: true
+        sortable: true
+    question:
+        label: question
+        type: text
+        searchable: true
+        sortable: true
+    type:
+        label: type
+        type: text
+        searchable: true
+        sortable: true
+    required:
+        label: required
+        type: text
+        searchable: true
+        sortable: true
+    order:
+        label: order
+        type: text
+        searchable: true
+        sortable: true
+    created_at:
+        label: created_at
+        type: datetime
+        searchable: true
+        sortable: true
+    updated_at:
+        label: updated_at
+        type: datetime
+        searchable: true
+        sortable: true

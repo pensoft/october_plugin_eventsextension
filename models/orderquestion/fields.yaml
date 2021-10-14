@@ -1,0 +1,47 @@
+fields:
+    event:
+        label: Event
+        nameFrom: title
+        descriptionFrom: description
+        span: full
+        type: relation
+    question:
+        label: Question/label
+        size: large
+        span: auto
+        type: textarea
+    name:
+        label: Name
+        span: auto
+        preset:
+            field: question
+            type: slug
+        type: text
+    type:
+        label: 'Field type'
+        options:
+            p: plaintext/textarea
+            t: text/string
+            e: email
+            r: radio
+            c: checkbox(es)
+            d: dropdown
+        showSearch: true
+        span: auto
+        type: dropdown
+    required:
+        label: Required
+        span: auto
+        default: 1
+        type: switch
+    active:
+        label: 'Visible in form'
+        span: auto
+        default: 1
+        type: switch
+    order:
+        label: 'Sort order'
+        span: auto
+        default: '1'
+        type: text
+        comment: 'small integer'

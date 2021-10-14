@@ -1,0 +1,29 @@
+columns:
+    created_at:
+        label: created_at
+        type: datetime
+        searchable: true
+        sortable: true
+    event_title[title]:
+        label: Event
+        defaultFrom: event_title
+    attendee_id[attendee_id]:
+        label: Attendee
+        defaultFrom: attendee_id
+    attendee_question:
+        label: 'Attendee question'
+        type: text
+        searchable: true
+        sortable: true
+        select: question
+        relation: attendee_question
+    answer:
+        label: answer
+        type: text
+        searchable: true
+        sortable: true
+    order:
+        label: order
+        type: text
+        searchable: true
+        sortable: true

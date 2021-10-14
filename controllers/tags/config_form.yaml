@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Tag
+
+# Model Form Field configuration
+form: $/pensoft/eventsextension/models/tag/fields.yaml
+
+# Model Class name
+modelClass: Pensoft\Eventsextension\Models\Tag
+
+# Default redirect location
+defaultRedirect: pensoft/eventsextension/tags
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: pensoft/eventsextension/tags/update/:id
+    redirectClose: pensoft/eventsextension/tags
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: pensoft/eventsextension/tags
+    redirectClose: pensoft/eventsextension/tags
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

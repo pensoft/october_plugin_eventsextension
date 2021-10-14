@@ -1,0 +1,55 @@
+fields:
+    event:
+        label: Event
+        nameFrom: title
+        descriptionFrom: description
+        span: auto
+        type: relation
+    name:
+        label: Name
+        span: auto
+        type: text
+    price:
+        label: Price
+        span: auto
+        default: '0.0'
+        type: text
+    quantity:
+        label: Quantity
+        span: auto
+        type: text
+        comment: 'small integer'
+    description:
+        label: Description
+        size: large
+        span: auto
+        type: richeditor
+    available_quantity:
+        label: 'Available quantity'
+        span: auto
+        defaultFrom: quantity
+        type: text
+    start_date:
+        label: 'Start date'
+        mode: datetime
+        span: auto
+        type: datepicker
+    end_date:
+        label: 'End date'
+        mode: datetime
+        span: auto
+        type: datepicker
+    quantity_min_per_order:
+        label: 'Quantity per order (MIN)'
+        span: auto
+        default: '1'
+        type: text
+    quantity_max_per_order:
+        label: 'Quantity per order (MAX)'
+        span: auto
+        default: '1'
+        type: text
+    visible:
+        label: Visible
+        span: auto
+        type: switch

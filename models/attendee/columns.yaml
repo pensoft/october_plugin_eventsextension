@@ -1,0 +1,14 @@
+columns:
+    id:
+        label: id
+        type: number
+        searchable: true
+        invisible: false
+        sortable: true
+    event:
+        label: Event
+        relation: event
+        select: title
+        searchable: true
+        invisible: false
+        sortable: true

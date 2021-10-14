@@ -53,3 +53,40 @@
 1.0.19:
     - 'Created table pensoft_eventsextension_attendee_email_logs'
     - builder_table_create_pensoft_eventsextension_attendee_email_logs.php
+1.0.20:
+    - 'Renamed status and changed type'
+1.0.21:
+    - 'Renamed status and changed type'
+1.0.22:
+    - 'Status field changed type to int and rename'
+    - update_entries_new.php
+1.0.23:
+    - 'Updated table pensoft_eventsextension_attendee_question'
+    - builder_table_update_pensoft_eventsextension_attendee_question.php
+1.0.24:
+    - 'Updated table pensoft_eventsextension_order_question'
+    - builder_table_update_pensoft_eventsextension_order_question.php
+1.0.25:
+    - 'Updated table pensoft_eventsextension_attendee_question'
+    - builder_table_update_pensoft_eventsextension_attendee_question_2.php
+1.0.26:
+    - 'Updated table pensoft_eventsextension_attendee_answer'
+    - builder_table_update_pensoft_eventsextension_attendee_answer.php
+1.0.27:
+    - 'Remove fields utc and created'
+    - update_entries_remove_column.php
+1.0.28:
+    - 'Updated table pensoft_eventsextension_order_question'
+    - builder_table_update_pensoft_eventsextension_order_question_2.php
+1.0.29:
+    - 'Updated table pensoft_eventsextension_attendee_question'
+    - builder_table_update_pensoft_eventsextension_attendee_question_3.php
+1.0.30:
+    - 'Updated table pensoft_eventsextension_attendee'
+    - builder_table_update_pensoft_eventsextension_attendee.php
+1.0.31:
+    - 'Updated table pensoft_eventsextension_attendee'
+    - builder_table_update_pensoft_eventsextension_attendee_2.php
+1.0.32:
+    - 'Updated table pensoft_eventsextension_attendee'
+    - builder_table_update_pensoft_eventsextension_attendee_3.php

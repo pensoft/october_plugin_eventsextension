@@ -1,0 +1,14 @@
+columns:
+    id:
+        label: id
+        type: number
+    order_question:
+        label: 'Order question'
+        relation: order_question
+        select: question
+    answer:
+        label: answer
+        type: text
+    order:
+        label: order
+        type: text

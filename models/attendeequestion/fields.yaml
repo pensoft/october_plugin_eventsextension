@@ -1,0 +1,37 @@
+fields:
+    attendee:
+        label: Attendee
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    order_question:
+        label: 'Order question'
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
+    event:
+        label: Event
+        nameFrom: title
+        descriptionFrom: description
+        span: auto
+        type: relation
+    question:
+        label: Question
+        size: ''
+        span: auto
+        type: textarea
+    type:
+        label: Type
+        span: auto
+        type: text
+        comment: 'p - plaintext, t - text, r - radio, d - dropdown, c - checkboxes'
+    required:
+        label: Required
+        span: auto
+        type: switch
+    order:
+        label: 'Sort order'
+        span: auto
+        type: text

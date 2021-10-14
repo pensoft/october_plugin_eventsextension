@@ -1,0 +1,41 @@
+<h1>{{event.title}}</h1>
+
+{% if message != '' %}
+
+	<p class="flash-message static success">
+		{{ message }}
+	</p>
+
+	<p><a href="{{ 'event-register' | page}}" class="btn btn-primary">New registration</a></p>
+
+{% else %}
+
+
+<form method="post"
+	  id="event-register-form-{{event.id}}"
+	  name="event-register-form-{{event.id}}"
+	  data-request-validate
+	  data-request-flash
+	  data-request="{{__SELF__}}::onSubmit">
+
+	<div class="alert alert-danger" data-validate-error>
+		<p data-message class="flash-message static error"></p>
+	</div>
+
+	<input type="hidden" name="_handler" value="onSubmit">
+	{{ form_token() }}
+	{{ form_sessionKey() }}
+
+
+	<div class="row ui form">
+		{{ __SELF__.getFormFields()|raw }}
+	</div>
+
+
+
+
+	{% framework extras %}
+	{% scripts %}
+</form>
+
+{% endif %}

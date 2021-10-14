@@ -1,0 +1,42 @@
+columns:
+    id:
+        label: id
+        type: number
+        searchable: true
+        sortable: true
+    event:
+        label: Event
+        select: title
+        relation: event
+        searchable: true
+        sortable: true
+    name:
+        label: Name
+        type: text
+        searchable: true
+        sortable: true
+    type:
+        label: Type
+        type: text
+        searchable: true
+        sortable: true
+    price:
+        label: Price
+        type: text
+        searchable: true
+        sortable: true
+    quantity:
+        label: Quantity
+        type: text
+        searchable: true
+        sortable: true
+    start_date:
+        label: 'Start date'
+        type: text
+        searchable: true
+        sortable: true
+    end_date:
+        label: 'End date'
+        type: text
+        searchable: true
+        sortable: true
