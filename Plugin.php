@@ -129,6 +129,13 @@ class Plugin extends PluginBase
 						'options' => Models\Status::all()->lists('name', 'id'),
 						'nameFrom' => 'name'
 					],
+					'thank_you_message' => [
+						'label' => 'Thank you message',
+						'span' => 'auto',
+						'type' => 'richeditor',
+						'size' => 'large',
+						'required' => 0
+					],
 
 				]);
 

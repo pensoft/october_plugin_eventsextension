@@ -14,7 +14,8 @@ use Pensoft\Eventsextension\QuestionFormGenerator;
  */
 class EventsRegisterForm extends ComponentBase
 {
-    public function componentDetails()
+    public $thankYouMessage;
+	public function componentDetails()
     {
         return [
             'name' => 'EventsRegisterForm Component',
@@ -34,7 +35,7 @@ class EventsRegisterForm extends ComponentBase
     {
         $this->page['event'] = (new Entry())::where('id', $this->getEventId())->first();
         $this->page['message'] = \Session::get('message');
-    	return [];
+        $this->thankYouMessage = $this->page['event']['thank_you_message'];
     }
 
 	public function getFormFields()
@@ -105,8 +106,7 @@ class EventsRegisterForm extends ComponentBase
 			$attendeeAnswer->save();
 		}
 
-//		\Flash::success('Thank you');
-		return \Redirect::back()->with('message', 'Thank you');
+		return \Redirect::back()->with('message', $this->thankYouMessage);
 //		return \Redirect::back()->with('success', 1);
 	}
 }

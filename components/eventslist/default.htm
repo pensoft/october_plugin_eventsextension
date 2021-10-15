@@ -13,7 +13,7 @@
 				<h3 class="card-title"><a href="{{ 'events' | page}}/{{item.slug}}">{{item.title}}</a></h3>
 
 			</div>
-			<div class="text-published">{{item.start | date('d F Y')}} - {{item.end | date('d F Y')}}</div>
+			<div class="text-published">{{item.event_date}}</div>
 			<div class="body">{{item.summary|raw}}</div>
 		</div>
 	</div>

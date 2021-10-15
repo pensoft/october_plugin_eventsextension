@@ -9,7 +9,7 @@ fields:
         label: Question/label
         size: large
         span: auto
-        type: textarea
+        type: richeditor
     name:
         label: Name
         span: auto
