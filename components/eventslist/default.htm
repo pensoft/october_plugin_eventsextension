@@ -5,7 +5,7 @@
 	<div class="events-item item-{{item.slug}} row">
 		{% if item.cover_image %}
 		<div class="col-lg-3 col-md-4 col-xs-12">
-			<img class="events-img-left" src="{{item.cover_image.getThumb(280, 181, {'mode': 'crop'})}}">
+			<a href="{{ 'events' | page}}/{{item.slug}}"><img class="events-img-left" src="{{item.cover_image.getThumb(280, 181, {'mode': 'crop'})}}"></a>
 		</div>
 		{% endif %}
 		<div class="col-xs events-container">

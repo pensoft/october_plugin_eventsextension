@@ -102,3 +102,5 @@
 1.0.37:
     - 'New field thank you message'
     - update_entries_thank_you.php
+1.0.38:
+    - 'Visual fixes'
