@@ -3,6 +3,8 @@
 use Backend;
 use Pensoft\Calendar\Controllers\Entries;
 use Pensoft\Calendar\Models\Entry;
+use Pensoft\Calendar\Models\Event;
+use Pensoft\Eventsextension\Models\Tag;
 use System\Classes\PluginBase;
 
 /**
@@ -47,12 +49,19 @@ class Plugin extends PluginBase
 	{
 		//Extending Entry Model and add status relation
 		Entry::extend(function($model) {
+
 			if (!$model instanceof \Pensoft\Calendar\Models\Entry) {
 				return;
 			}
 
 			$model->belongsTo['status'] = [
 				'Pensoft\Eventsextension\Models\Status'
+			];
+			$model->belongsToMany['tags'] = [
+				'Pensoft\Eventsextension\Models\Tag',
+				'table' => 'pensoft_eventsextension_event_tags',
+				'key'      => 'event_id',
+				'otherKey' => 'tag_id'
 			];
 		});
 
@@ -122,7 +131,6 @@ class Plugin extends PluginBase
 					],
 					'status' => [
 						'label' => 'Status',
-//						'emptyOption' => '-- choose --',
 						'span'  => 'auto',
 						'type'  => 'relation',
 						'select'  => 'name',
@@ -136,6 +144,13 @@ class Plugin extends PluginBase
 						'size' => 'large',
 						'required' => 0
 					],
+					'tags' => [
+						'label' => 'Tags',
+						'span'  => 'auto',
+						'type'  => 'relation',
+						'options' => Models\Tag::all()->lists('name', 'id'),
+						'nameFrom' => 'name'
+					],
 
 				]);
 
@@ -146,6 +161,7 @@ class Plugin extends PluginBase
 
 			});
 		}
+
 	}
 
     /**

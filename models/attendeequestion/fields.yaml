@@ -1,37 +1,47 @@
 fields:
     attendee:
         label: Attendee
-        nameFrom: name
+        nameFrom: id
         descriptionFrom: description
         span: auto
+        readOnly: 1
         type: relation
     order_question:
         label: 'Order question'
         nameFrom: name
         descriptionFrom: description
         span: auto
+        readOnly: 1
         type: relation
     event:
         label: Event
         nameFrom: title
         descriptionFrom: description
         span: auto
+        readOnly: 1
         type: relation
     question:
-        label: Question
-        size: ''
+        label: 'Attendee question'
         span: auto
+        disabled: 1
+        readOnly: 1
         type: textarea
     type:
         label: Type
         span: auto
+        disabled: 1
+        readOnly: 1
         type: text
         comment: 'p - plaintext, t - text, r - radio, d - dropdown, c - checkboxes'
     required:
         label: Required
         span: auto
+        disabled: 1
+        readOnly: 1
         type: switch
     order:
         label: 'Sort order'
         span: auto
+        disabled: 1
+        readOnly: 1
         type: text

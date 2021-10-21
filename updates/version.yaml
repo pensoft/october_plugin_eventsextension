@@ -104,3 +104,5 @@
     - update_entries_thank_you.php
 1.0.38:
     - 'Visual fixes'
+1.0.39:
+    - 'Backend lists fixes; Form submit fixes'

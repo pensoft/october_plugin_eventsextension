@@ -2,6 +2,7 @@ fields:
     order_question:
         label: 'Order Question'
         nameFrom: question
+        select: concat(regexp_replace(question, E'<[^>]+>', '', 'gi') || ' - visible (' || active || ')')
         descriptionFrom: description
         span: auto
         type: relation

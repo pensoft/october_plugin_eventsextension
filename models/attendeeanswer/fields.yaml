@@ -3,7 +3,9 @@ fields:
         label: 'Attendee question'
         nameFrom: question
         descriptionFrom: description
+        select: 'regexp_replace(question, E''<[^>]+>'', '''', ''gi'')'
         span: auto
+        readOnly: 1
         type: relation
     answer:
         label: Answer

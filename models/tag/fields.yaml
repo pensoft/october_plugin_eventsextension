@@ -3,3 +3,8 @@ fields:
         label: Name
         span: auto
         type: text
+    event:
+        label: Events
+        nameFrom: title
+        span: auto
+        type: relation

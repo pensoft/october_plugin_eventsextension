@@ -6,6 +6,7 @@ use Pensoft\Calendar\Models\Entry;
 use Pensoft\Eventsextension\Models\Attendee;
 use Pensoft\Eventsextension\Models\AttendeeAnswer;
 use Pensoft\Eventsextension\Models\AttendeeQuestion;
+use Pensoft\Eventsextension\Models\OrderAnswer;
 use Pensoft\Eventsextension\Models\OrderQuestion;
 use Pensoft\Eventsextension\QuestionFormGenerator;
 
@@ -87,6 +88,7 @@ class EventsRegisterForm extends ComponentBase
 		$attendee->save();
 
 		foreach($allQuestions as $key => $question){
+
 			//copy the questions to attendee questions
 			$attendeeQuestion = new AttendeeQuestion();
 			$attendeeQuestion->order_question_id = $question['id'];
@@ -100,7 +102,13 @@ class EventsRegisterForm extends ComponentBase
 
 			//write the answers in attendee_answers
 			$attendeeAnswer = new AttendeeAnswer();
-			$attendeeAnswer->answer = \Input::get($question['name']);
+			if($question['active']){
+				$attendeeAnswer->answer = \Input::get($question['name']);
+			}else{
+				$defaultAnswer = (new OrderAnswer())->where('order_question_id', $question['id'])->first()->toArray();
+				$attendeeAnswer->answer =  $defaultAnswer['answer'];
+			}
+
 			$attendeeAnswer->order = $attendeeQuestion->order;
 			$attendeeAnswer->attendee_question = $attendeeQuestion->id;
 			$attendeeAnswer->save();

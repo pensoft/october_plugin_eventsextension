@@ -11,17 +11,12 @@ columns:
         select: id
         searchable: true
         sortable: true
-    order_question:
-        label: 'Order question'
-        relation: order_question
-        select: question
-        searchable: true
-        sortable: true
     question:
-        label: question
+        label: 'Question'
         type: text
         searchable: true
         sortable: true
+        select: regexp_replace(question, E'<[^>]+>', '', 'gi')
     type:
         label: type
         type: text
