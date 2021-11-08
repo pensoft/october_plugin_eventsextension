@@ -32,4 +32,9 @@ class Attendee extends Model
 		'order' => 'Pensoft\Eventsextension\Models\Order',
 		'event' => 'Pensoft\Calendar\Models\Entry',
 	];
+
+    public $hasMany = [
+    	'attendee_questions' => 'Pensoft\Eventsextension\Models\AttendeeQuestion'
+	];
+
 }

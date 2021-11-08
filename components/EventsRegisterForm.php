@@ -6,6 +6,7 @@ use Pensoft\Calendar\Models\Entry;
 use Pensoft\Eventsextension\Models\Attendee;
 use Pensoft\Eventsextension\Models\AttendeeAnswer;
 use Pensoft\Eventsextension\Models\AttendeeQuestion;
+use Pensoft\Eventsextension\Models\OrderAnswer;
 use Pensoft\Eventsextension\Models\OrderQuestion;
 use Pensoft\Eventsextension\QuestionFormGenerator;
 
@@ -14,7 +15,8 @@ use Pensoft\Eventsextension\QuestionFormGenerator;
  */
 class EventsRegisterForm extends ComponentBase
 {
-    public function componentDetails()
+    public $thankYouMessage;
+	public function componentDetails()
     {
         return [
             'name' => 'EventsRegisterForm Component',
@@ -34,7 +36,7 @@ class EventsRegisterForm extends ComponentBase
     {
         $this->page['event'] = (new Entry())::where('id', $this->getEventId())->first();
         $this->page['message'] = \Session::get('message');
-    	return [];
+        $this->thankYouMessage = $this->page['event']['thank_you_message'];
     }
 
 	public function getFormFields()
@@ -86,6 +88,7 @@ class EventsRegisterForm extends ComponentBase
 		$attendee->save();
 
 		foreach($allQuestions as $key => $question){
+
 			//copy the questions to attendee questions
 			$attendeeQuestion = new AttendeeQuestion();
 			$attendeeQuestion->order_question_id = $question['id'];
@@ -98,15 +101,39 @@ class EventsRegisterForm extends ComponentBase
 			$attendeeQuestion->save();
 
 			//write the answers in attendee_answers
-			$attendeeAnswer = new AttendeeAnswer();
-			$attendeeAnswer->answer = \Input::get($question['name']);
-			$attendeeAnswer->order = $attendeeQuestion->order;
-			$attendeeAnswer->attendee_question = $attendeeQuestion->id;
-			$attendeeAnswer->save();
+
+			if($question['active']){
+				$answers = \Input::get($question['name']);
+				if(is_array($answers)){
+					foreach ($answers as $answer){
+						$attendeeAnswer = new AttendeeAnswer();
+						$attendeeAnswer->answer = $answer;
+						$attendeeAnswer->order = $attendeeQuestion->order;
+						$attendeeAnswer->attendee_question = $attendeeQuestion->id;
+						$attendeeAnswer->save();
+					}
+				}else{
+					$attendeeAnswer = new AttendeeAnswer();
+					$attendeeAnswer->answer = $answers;
+					$attendeeAnswer->order = $attendeeQuestion->order;
+					$attendeeAnswer->attendee_question = $attendeeQuestion->id;
+					$attendeeAnswer->save();
+				}
+
+
+			}else{
+				$attendeeAnswer = new AttendeeAnswer();
+				$defaultAnswer = (new OrderAnswer())->where('order_question_id', $question['id'])->first()->toArray();
+				$attendeeAnswer->answer =  $defaultAnswer['answer'];
+				$attendeeAnswer->order = $attendeeQuestion->order;
+				$attendeeAnswer->attendee_question = $attendeeQuestion->id;
+				$attendeeAnswer->save();
+			}
+
+
 		}
 
-//		\Flash::success('Thank you');
-		return \Redirect::back()->with('message', 'Thank you');
+		return \Redirect::back()->with('message', $this->thankYouMessage);
 //		return \Redirect::back()->with('success', 1);
 	}
 }

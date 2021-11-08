@@ -32,4 +32,9 @@ class OrderQuestions extends Controller
 
         BackendMenu::setContext('Pensoft.Eventsextension', 'eventsextension', 'orderquestions');
     }
+
+	public function listExtendQuery($query)
+	{
+		$query->orderBy('order', 'asc');
+	}
 }

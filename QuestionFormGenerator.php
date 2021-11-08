@@ -64,7 +64,7 @@ class QuestionFormGenerator {
 							$selected_ = 'checked';
 						}
 					}
-					$fields .= "<label><input name=\"${name}\" type=\"${type}\" value=\"${value}\" ${required_} ${selected_}/>${value}</label>\n";
+					$fields .= "<label><input name=\"${name}[]\" type=\"${type}\" value=\"${value}\" ${required_} ${selected_}/>${value}</label>\n";
 				}
 				$field = $fields;
 			}

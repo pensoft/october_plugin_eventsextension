@@ -5,7 +5,7 @@
 	<div class="events-item item-{{item.slug}} row">
 		{% if item.cover_image %}
 		<div class="col-lg-3 col-md-4 col-xs-12">
-			<img class="events-img-left" src="{{item.cover_image.getThumb(280, 181, {'mode': 'crop'})}}">
+			<a href="{{ 'events' | page}}/{{item.slug}}"><img class="events-img-left" src="{{item.cover_image.getThumb(280, 181, {'mode': 'crop'})}}"></a>
 		</div>
 		{% endif %}
 		<div class="col-xs events-container">
@@ -13,7 +13,7 @@
 				<h3 class="card-title"><a href="{{ 'events' | page}}/{{item.slug}}">{{item.title}}</a></h3>
 
 			</div>
-			<div class="text-published">{{item.start | date('d F Y')}} - {{item.end | date('d F Y')}}</div>
+			<div class="text-published">{{item.event_date}}</div>
 			<div class="body">{{item.summary|raw}}</div>
 		</div>
 	</div>

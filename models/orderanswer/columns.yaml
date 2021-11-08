@@ -5,7 +5,7 @@ columns:
     order_question:
         label: 'Order question'
         relation: order_question
-        select: question
+        select: regexp_replace(question, E'<[^>]+>', '', 'gi')
     answer:
         label: answer
         type: text

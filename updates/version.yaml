@@ -99,3 +99,10 @@
     - update_entries_active_new.php
 1.0.36:
     - 'Add the field'
+1.0.37:
+    - 'New field thank you message'
+    - update_entries_thank_you.php
+1.0.38:
+    - 'Visual fixes'
+1.0.39:
+    - 'Backend lists fixes; Form submit fixes'

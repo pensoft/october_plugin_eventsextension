@@ -6,7 +6,11 @@ columns:
         sortable: true
     event_title[title]:
         label: Event
+        valueFrom: event_title
         defaultFrom: event_title
+#        type: partial
+        sortable: true
+#        path: ~/plugins/pensoft/eventsextension/models/attendeeanswer/partials/_event_column.htm
     attendee_id[attendee_id]:
         label: Attendee
         defaultFrom: attendee_id
@@ -15,7 +19,7 @@ columns:
         type: text
         searchable: true
         sortable: true
-        select: question
+        select: regexp_replace(question, E'<[^>]+>', '', 'gi')
         relation: attendee_question
     answer:
         label: answer

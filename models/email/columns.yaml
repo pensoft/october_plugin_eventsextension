@@ -1,0 +1,16 @@
+columns:
+    id:
+        label: id
+        type: number
+    created_at:
+        label: created_at
+        type: datetime
+    attendee_id:
+        label: attendee_id
+        type: number
+    email:
+        label: email
+        type: text
+    subject:
+        label: subject
+        type: text

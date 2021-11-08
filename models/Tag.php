@@ -26,4 +26,14 @@ class Tag extends Model
      */
     public $rules = [
     ];
+
+	public $belongsToMany = [
+		'event' => [
+			'Pensoft\Calendar\Models\Entry',
+			'table' => 'pensoft_eventsextension_event_tags',
+			'order' => 'title',
+			'key'      => 'tag_id',
+			'otherKey' => 'event_id',
+		]
+	];
 }

@@ -1,0 +1,35 @@
+{% for event in __SELF__.getEvents() %}
+	<h1>{{event.title}}</h1>
+
+	<div id="popupEmailForm"></div>
+	<div class="emailAndExport">
+		With selected:
+		<!--<a data-toggle="modal" class="modal-link" href="#contentBasicEmailForm">Send email</a> &nbsp; &nbsp;-->
+		<a href="javascript:void(0);" onclick="onLoadEmailForm();" class="btn btn-danger btn-primary">Send email</a> &nbsp; &nbsp;
+		<a class="btn btn-warning btn-primary" href="javascript:void(0);" onclick="">Export to CSV</a>
+	</div>
+
+	<table>
+		<tr>
+			<td><input type="checkbox" id="checkAll"> Check all </td>
+			<td>ID</td>
+			{% for o_question in event.order_questions %}
+				<td>{{o_question.question|raw}}</td>
+			{% endfor %}
+		</tr>
+		{% for attendee in event.attendees %}
+
+			<tr>
+				<td><input type="checkbox" name="attendee" data-record="{{attendee.attendee_questions}}"> </td>
+				<td>{{attendee.id}}</td>
+				{% for a_question in attendee.attendee_questions %}
+				<td>
+					{% for answer in a_question.attendee_answers %}
+						{{answer.answer}}
+					{% endfor %}
+				</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+	</table>
+{% endfor %}

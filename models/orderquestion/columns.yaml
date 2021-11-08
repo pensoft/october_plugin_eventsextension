@@ -1,9 +1,10 @@
 columns:
-    id:
-        label: id
-        type: number
+    order:
+        label: order
+        type: text
         searchable: true
         sortable: true
+        sortdirection: asc
     event:
         label: Event
         relation: event
@@ -15,8 +16,10 @@ columns:
         type: text
         searchable: true
         sortable: true
-    order:
-        label: order
-        type: text
+        select: regexp_replace(question, E'<[^>]+>', '', 'gi')
+    active:
+        label: 'Visible in form'
+        type: number
         searchable: true
         sortable: true
+

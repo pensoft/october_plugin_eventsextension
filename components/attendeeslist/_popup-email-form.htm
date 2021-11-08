@@ -1,0 +1,81 @@
+<!-- Modal -->
+<div class="modal_events fade" id="contentBasicEmailForm" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form method="post" data-request="{{__SELF__}}::onSendEmail" data-request-files data-request-flash  enctype="multipart/form-data">
+					<input type="hidden" name="_handler" value="onSendEmail">
+					{{ form_token() }}
+					{{ form_sessionKey() }}
+					<div class="row ui form" id="mails">
+						<div class="col-xs">
+
+								<input type="hidden" name="recipients" value="{{mailsArr}}" />
+
+							<div class="row">
+								<div class="col-xs">
+									<div class="formErrors"></div>
+								</div>
+							</div>
+							<div class="row box">
+								<div class="col-xs">
+									<div class="row">
+										<div class="col-xs">
+											<div class="inputLabel">Recipients</div>
+											<div class="field">
+												{{mailsStr}}
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs">
+											<div class="inputLabel">Subject</div>
+											<div class="field">
+												<input type="text" name="subject" value="" class="DPText" size="2">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs">
+											<div class="inputLabel">Message</div>
+											<div class="field">
+
+												<textarea name="message" id="message" cols="" rows="12"></textarea>
+												<script>
+													// instance, using default configuration.
+													CKEDITOR.replace( 'message' );
+
+												</script>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="row center-xs">
+										<div class="col-xs-12 col-sm-3">
+
+											<input type="submit" name="tAction" value="Send" class="btn btn-primary">
+
+										</div>
+									</div>
+									<div class="row center-xs">
+										<div class="col-xs-12">&nbsp;</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</form>
+
+				{% framework extras %}
+				{% scripts %}
+
+			</div>
+		</div>
+	</div>
+</div>

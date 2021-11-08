@@ -32,4 +32,9 @@ class AttendeeAnswers extends Controller
 
         BackendMenu::setContext('Pensoft.Eventsextension', 'eventsextension', 'attendeeanswers');
     }
+
+	public function listExtendQuery($query)
+	{
+		$query->orderBy('created_at', 'desc')->orderBy('order', 'asc');
+	}
 }

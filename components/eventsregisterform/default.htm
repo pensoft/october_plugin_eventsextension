@@ -2,9 +2,9 @@
 
 {% if message != '' %}
 
-	<p class="flash-message static success">
-		{{ message }}
-	</p>
+	<div class="flash-message static success">
+		{{ message | raw }}
+	</div>
 
 	<p><a href="{{ 'event-register' | page}}" class="btn btn-primary">New registration</a></p>
 

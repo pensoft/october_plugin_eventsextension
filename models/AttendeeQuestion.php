@@ -17,6 +17,8 @@ class AttendeeQuestion extends Model
      */
     public $timestamps = true;
 
+	protected $with = ['attendee_answers'];
+
 
     /**
      * @var string The database table used by the model.
@@ -34,5 +36,12 @@ class AttendeeQuestion extends Model
 		'attendee' => 'Pensoft\Eventsextension\Models\Attendee',
 		'order_question' => 'Pensoft\Eventsextension\Models\OrderQuestion',
 		'ticket' => 'Pensoft\Eventsextension\Models\Ticket',
+	];
+
+	public $hasMany = [
+		'attendee_answers' => 'Pensoft\Eventsextension\Models\AttendeeAnswer',
+	];
+	public $hasOne = [
+		'attendee_answer' => 'Pensoft\Eventsextension\Models\AttendeeAnswer',
 	];
 }

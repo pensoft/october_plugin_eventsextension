@@ -3,6 +3,8 @@
 use Backend;
 use Pensoft\Calendar\Controllers\Entries;
 use Pensoft\Calendar\Models\Entry;
+use Pensoft\Calendar\Models\Event;
+use Pensoft\Eventsextension\Models\Tag;
 use System\Classes\PluginBase;
 
 /**
@@ -12,6 +14,7 @@ class Plugin extends PluginBase
 {
 
 	public $require = ['Pensoft.Calendar', 'Rainlab.Location'];
+
     /**
      * Returns information about this plugin.
      *
@@ -47,12 +50,32 @@ class Plugin extends PluginBase
 	{
 		//Extending Entry Model and add status relation
 		Entry::extend(function($model) {
+
 			if (!$model instanceof \Pensoft\Calendar\Models\Entry) {
 				return;
 			}
 
 			$model->belongsTo['status'] = [
 				'Pensoft\Eventsextension\Models\Status'
+			];
+			$model->belongsToMany['tags'] = [
+				'Pensoft\Eventsextension\Models\Tag',
+				'table' => 'pensoft_eventsextension_event_tags',
+				'key'      => 'event_id',
+				'otherKey' => 'tag_id'
+			];
+
+			$model->hasMany['order_questions'] = [
+				'Pensoft\Eventsextension\Models\OrderQuestion',
+				'table' => 'pensoft_eventsextension_orderquestions',
+				'key'      => 'event_id',
+				'otherKey' => 'id'
+			];
+
+			$model->hasMany['attendees'] = [
+				'Pensoft\Eventsextension\Models\Attendee',
+				'table' => 'pensoft_eventsextension_attendees',
+				'key'      => 'event_id',
 			];
 		});
 
@@ -122,11 +145,24 @@ class Plugin extends PluginBase
 					],
 					'status' => [
 						'label' => 'Status',
-//						'emptyOption' => '-- choose --',
 						'span'  => 'auto',
 						'type'  => 'relation',
 						'select'  => 'name',
 						'options' => Models\Status::all()->lists('name', 'id'),
+						'nameFrom' => 'name'
+					],
+					'thank_you_message' => [
+						'label' => 'Thank you message',
+						'span' => 'auto',
+						'type' => 'richeditor',
+						'size' => 'large',
+						'required' => 0
+					],
+					'tags' => [
+						'label' => 'Tags',
+						'span'  => 'auto',
+						'type'  => 'relation',
+						'options' => Models\Tag::all()->lists('name', 'id'),
 						'nameFrom' => 'name'
 					],
 
@@ -139,6 +175,7 @@ class Plugin extends PluginBase
 
 			});
 		}
+
 	}
 
     /**
@@ -152,6 +189,7 @@ class Plugin extends PluginBase
         return [
             'Pensoft\Eventsextension\Components\EventsList' => 'EventsList',
             'Pensoft\Eventsextension\Components\EventsRegisterForm' => 'EventsRegisterForm',
+            'Pensoft\Eventsextension\Components\AttendeesList' => 'AttendeesList',
         ];
     }
 
