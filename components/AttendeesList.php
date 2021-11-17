@@ -3,6 +3,7 @@
 use Cms\Classes\ComponentBase;
 use GuzzleHttp\Psr7\Request;
 use Pensoft\Calendar\Models\Entry;
+use Pensoft\Eventsextension\Models\AttendeeAnswer;
 use Pensoft\Eventsextension\Models\Email;
 
 /**
@@ -10,6 +11,16 @@ use Pensoft\Eventsextension\Models\Email;
  */
 class AttendeesList extends ComponentBase
 {
+
+	const FIELD_TYPES = [
+		'p' => 'p', //input one
+		't' => 'text', // input one
+		'e' => 'email', // input one
+		'r' => 'radio', // input many (answers)
+		'd' => 'select', // select many (answers)
+		'c' => 'checkbox', // input many (answers)
+	];
+
     public function componentDetails()
     {
         return [
@@ -36,12 +47,8 @@ class AttendeesList extends ComponentBase
     	if(post('attendees')){
     		$attendees = post('attendees');
     		$mails = array();
-			foreach ($attendees as $attendee){
-				foreach ($attendee as $question){
-					if (strpos($question['question'], 'mail') !== false) {
-						$mails[$question['attendee_id']] = $question['attendee_answers'][0]['answer'];
-					}
-				}
+			foreach ($attendees as $attendeeQuestion){
+				$mails[$attendeeQuestion['attendee_id']] = $attendeeQuestion['attendee_answers'][0]['answer'];
 			}
 		}
 		$this->page['mailsArr'] = json_encode($mails);
@@ -77,6 +84,7 @@ class AttendeesList extends ComponentBase
 				$message->subject($subject);
 
 			});
+			sleep(1); // TODO remove this line
 
 			if (count(\Mail::failures()) > 0){
 				\Flash::error('Mail not sent');
@@ -95,5 +103,79 @@ class AttendeesList extends ComponentBase
 
 		\Flash::success('Mail(s) sent');
 
+	}
+
+
+	public function onLoadEditFieldForm(){
+    	$answerId = (int)post('answer_id');
+    	$answerValue = post('answer_value');
+    	$orderQuestionId = (int)post('order_question_id');
+    	$fieldType = post('field_type');
+		$questionData = json_decode(post('order_question_data'), true);
+		$type = self::FIELD_TYPES[$fieldType];
+		$name = $questionData['name'];
+		$answers = $questionData['answers'];
+		if($type == 'p'){//todo textarea
+			$field = "<input name=\"${name}\" type=\"text\" />\n";
+		}
+		if($type == 'text' || $type == 'email'){
+			$field = "<input name=\"${name}\" type=\"${type}\" value='${answerValue}' />\n";
+		}
+		if($type == 'radio' || $type == 'checkbox'){
+			$fields = "";
+			foreach($answers as $answer){
+				$value = $answer['answer'];
+				$selected_ = '';
+				if($answer['answer'] == $answerValue){
+					$selected_ = 'selected';
+					if($type == 'checkbox'){
+						$selected_ = 'checked';
+					}
+				}
+
+				$fields .= "<label><input name=\"${name}[]\" type=\"${type}\" value=\"${value}\" ${selected_}/>${value}</label>\n";
+			}
+			$field = $fields;
+		}
+		if($type == 'select'){
+			$fields = "<select name=\"${name}\" >\n";
+
+			foreach($answers as $answer){
+				$value = $answer['answer'];
+				$selected_ = '';
+				if($answer['answer'] == $answerValue){
+					$selected_ = 'selected';
+				}
+				$fields .= "<option value=\"${value}\" ${selected_}>${value}</option>\n";
+			}
+			$fields .= "</select>\n";
+			$field = $fields;
+		}
+
+		$this->page['field'] = $field;
+		$this->page['field_name'] = $name;
+		$this->page['attendee_answer_id'] = $answerId;
+		$this->page['label'] = 'my test label';
+	}
+
+
+	public function onSaveAnswerField(){
+    	$fieldName = \Input::get('field_name');
+    	$attendeeAnswer = \Input::get('attendee_answer_id');
+		$fieldValue = \Input::get($fieldName);
+
+		$validator = \Validator::make(
+			$form = \Input::all(), [
+				$fieldName => 'required',
+			]
+		);
+
+		if($validator->fails()){
+			throw new \ValidationException($validator);
+		}
+
+		$attendeeAnswer = (new AttendeeAnswer())->where('id', $attendeeAnswer)->first();
+		$attendeeAnswer->update(['answer' => $fieldValue]);
+		return \Redirect::refresh();
 	}
 }

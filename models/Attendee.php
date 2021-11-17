@@ -34,7 +34,12 @@ class Attendee extends Model
 	];
 
     public $hasMany = [
-    	'attendee_questions' => 'Pensoft\Eventsextension\Models\AttendeeQuestion'
+    	'attendee_questions' => 'Pensoft\Eventsextension\Models\AttendeeQuestion',
+		'attendee_question_names' => ['Pensoft\Eventsextension\Models\AttendeeQuestion', 'scope' => 'byName']
+	];
+
+    public $hasOne = [
+		'attendee_question_email' => ['Pensoft\Eventsextension\Models\AttendeeQuestion', 'scope' => 'byEmail']
 	];
 
 }

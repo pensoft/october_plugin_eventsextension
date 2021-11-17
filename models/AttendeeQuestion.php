@@ -44,4 +44,12 @@ class AttendeeQuestion extends Model
 	public $hasOne = [
 		'attendee_answer' => 'Pensoft\Eventsextension\Models\AttendeeAnswer',
 	];
+
+	public function scopeByEmail($query){
+		return $query->whereRaw('question ilike \'%mail%\'')->first();
+	}
+
+	public function scopeByName($query){
+		return $query->whereRaw('question ilike \'%name%\'')->get();
+	}
 }

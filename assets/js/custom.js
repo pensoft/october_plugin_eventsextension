@@ -1,9 +1,17 @@
 $(document).ready(function(){
 	$("#checkAll").change(function () {
-		$("input[name=attendee]").prop('checked', $(this).prop("checked"));
-		if($("input[name=attendee]:checked").length){
+		var checked = $(this).is(':checked'); // Checkbox state
+		// Select all
+		if(checked){
+			$('input[name=attendee]').each(function() {
+				$(this).prop('checked',true);
+			});
 			$('.emailAndExport').show();
 		}else{
+			// Deselect All
+			$('input[name=attendee]').each(function() {
+				$(this).prop('checked',false);
+			});
 			$('.emailAndExport').hide();
 		}
 	});
@@ -13,6 +21,13 @@ $(document).ready(function(){
 			$('.emailAndExport').show();
 		}else{
 			$('.emailAndExport').hide();
+		}
+
+		// When total options equals to total selected option
+		if($("input[name=attendee]").length == $("input[name=attendee]:checked").length) {
+			$("#checkAll").prop("checked", true);
+		} else {
+			$("#checkAll").prop("checked", false);
 		}
 	});
 
@@ -25,7 +40,7 @@ function onLoadEmailForm() {
 	var data = [];
 
 	$.each(checked, function(){
-		data.push($(this).data("record"));
+		data.push($(this).data("email"));
 	});
 
 	$.request('onLoadEmailForm', {
@@ -36,5 +51,22 @@ function onLoadEmailForm() {
 		},
 	}).then(response => {
 		$('#popupEmailForm').modal('show');
+	});
+}
+
+
+function onLoadEditFieldForm(pAnswerId, pAnswerValue, pOrderQuestionId, pFieldType, pOrderQuestionData) {
+	$.request('onLoadEditFieldForm', {
+		update: { '@_popup-edit-field-form': '#popupEditFieldForm',
+		},
+		data: {
+			'answer_id': pAnswerId,
+			'answer_value': pAnswerValue,
+			'order_question_id': pOrderQuestionId,
+			'field_type': pFieldType,
+			'order_question_data': pOrderQuestionData,
+		},
+	}).then(response => {
+		$('#popupEditFieldForm').modal('show');
 	});
 }

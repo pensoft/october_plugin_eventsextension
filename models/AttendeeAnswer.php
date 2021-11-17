@@ -24,6 +24,8 @@ class AttendeeAnswer extends Model
     public $rules = [
     ];
 
+    public $fillable = ['answer'];
+
 	public $belongsTo = [
 		'attendee_question' => 'Pensoft\Eventsextension\Models\AttendeeQuestion',
 //		'event' => 'Pensoft\Eventsextension\Models\AttendeeQuestion',

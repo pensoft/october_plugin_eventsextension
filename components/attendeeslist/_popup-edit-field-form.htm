@@ -1,0 +1,53 @@
+<!-- Modal -->
+<div class="modal_events fade" id="contentBasicFieldForm" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form method="post" data-request="{{__SELF__}}::onSaveAnswerField" data-request-files data-request-flash  enctype="multipart/form-data">
+					<input type="hidden" name="_handler" value="onSaveAnswerField">
+					<input type="hidden" name="field_name" value="{{field_name}}">
+					<input type="hidden" name="attendee_answer_id" value="{{attendee_answer_id}}">
+					{{ form_token() }}
+					{{ form_sessionKey() }}
+					<div class="row ui form" id="mails">
+						<div class="col-xs">
+
+							<div class="row box">
+								<div class="col-xs">
+									<div class="row">
+										<div class="col-xs">
+											<div class="inputLabel">{{label}}</div>
+											<div class="field">
+												{{field|raw}}
+											</div>
+										</div>
+									</div>
+
+									<div class="row center-xs">
+										<div class="col-xs-12 col-sm-3">
+
+											<input type="submit" name="tAction" value="Save" class="btn btn-primary">
+
+										</div>
+									</div>
+									<div class="row center-xs">
+										<div class="col-xs-12">&nbsp;</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</form>
+
+				{% framework extras %}
+				{% scripts %}
+
+			</div>
+		</div>
+	</div>
+</div>
