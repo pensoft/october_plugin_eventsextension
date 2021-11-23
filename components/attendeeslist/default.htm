@@ -1,4 +1,4 @@
-{% for event in __SELF__.getEvents() %}
+{% for event in __SELF__.getEntry() %}
 	<h1>{{event.title}}</h1>
 
 	<div id="popupEmailForm"></div>
@@ -6,7 +6,7 @@
 	<div class="emailAndExport">
 		With selected:
 		<a href="javascript:void(0);" onclick="onLoadEmailForm();" class="btn btn-danger btn-primary">Send email</a> &nbsp; &nbsp;
-		<a class="btn btn-warning btn-primary" href="javascript:void(0);" onclick="">Export to CSV</a>
+		<a class="btn btn-warning btn-primary" href="javascript:void(0);" onclick="onExportAttendees();">Export to Excel</a>
 	</div>
 
 	<table>
@@ -17,30 +17,32 @@
 				<td>{{o_question.question|raw}}</td>
 			{% endfor %}
 		</tr>
+
+
+
+
 		{% for attendee in event.attendees %}
 
 			<tr>
-				<td><input type="checkbox" name="attendee" data-email="{{attendee.attendee_question_email}}" data-names="{{attendee.attendee_question_names}}"> </td>
+				<td><input type="checkbox" name="attendee" data-email="{{attendee.attendee_question_email}}" data-names="{{attendee.attendee_question_names}}" data-id="{{attendee.id}}" data-eventid="{{event.id}}"> </td>
 				<td>{{attendee.id}}</td>
-
-
 				{% for o_question in event.order_questions %}
-				{% for a_question in attendee.attendee_questions %}
-					{% if o_question.id == a_question.order_question_id %}
-					<td>
-						{% for answer in a_question.attendee_answers %}
-						{{answer.answer}}
-							{% if o_question.active == false %}
-								<a href="javascript:void(0);" onclick="onLoadEditFieldForm({{answer.id}}, '{{answer.answer}}', {{a_question.order_question_id}}, '{{a_question.type}}', '{{o_question}}');" class="btn-danger">edit</a>
-							{% endif %}
-						{% endfor %}
-					</td>
-					{% endif %}
-				{% endfor %}
-
-
+					{% for k, attendeeAnswers in __SELF__.getEventAttendeeAnswers(event.id, attendee.id) %}
+						{% if k == o_question.id %}
+						<td>
+							{% for answerId, answer in attendeeAnswers %}
+								{{answer}}
+								{% if o_question.active == false %}
+									<a href="javascript:void(0);" onclick="onLoadEditFieldForm({{answerId}}, '{{answer}}', '{{o_question}}');" class="btn-danger">edit</a>
+								{% endif %}
+							{% endfor %}
+						</td>
+						{% endif %}
+					{% endfor %}
 				{% endfor %}
 			</tr>
+
 		{% endfor %}
+
 	</table>
 {% endfor %}

@@ -106,3 +106,5 @@
     - 'Visual fixes'
 1.0.39:
     - 'Backend lists fixes; Form submit fixes'
+1.0.40:
+    - 'New component AttendeesList'

@@ -34,8 +34,8 @@ class Attendee extends Model
 	];
 
     public $hasMany = [
-    	'attendee_questions' => 'Pensoft\Eventsextension\Models\AttendeeQuestion',
-		'attendee_question_names' => ['Pensoft\Eventsextension\Models\AttendeeQuestion', 'scope' => 'byName']
+    	'attendee_questions' => ['Pensoft\Eventsextension\Models\AttendeeQuestion', 'orderBy' => 'order'],
+		'attendee_question_names' => ['Pensoft\Eventsextension\Models\AttendeeQuestion', 'scope' => 'byName'],
 	];
 
     public $hasOne = [
