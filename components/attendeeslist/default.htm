@@ -14,7 +14,8 @@
 			<td><input type="checkbox" id="checkAll"> Check all </td>
 			<td>ID</td>
 			{% for o_question in event.order_questions %}
-				<td>{{o_question.question|raw}}</td>
+				<td>{{ o_question.question|length > 200 ? o_question.question|slice(0, 200)|striptags ~ '...' : o_question.question|raw  }}
+				</td>
 			{% endfor %}
 		</tr>
 

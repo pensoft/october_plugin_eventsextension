@@ -110,3 +110,5 @@
     - 'New component AttendeesList'
 1.0.41:
     - 'Component AttendeesList fixes'
+1.0.42:
+    - 'Component AttendeesList table header text limit'
