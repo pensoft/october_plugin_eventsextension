@@ -18,31 +18,24 @@
 			{% endfor %}
 		</tr>
 
-
-
-
 		{% for attendee in event.attendees %}
 
-			<tr>
-				<td><input type="checkbox" name="attendee" data-email="{{attendee.attendee_question_email}}" data-names="{{attendee.attendee_question_names}}" data-id="{{attendee.id}}" data-eventid="{{event.id}}"> </td>
-				<td>{{attendee.id}}</td>
-				{% for o_question in event.order_questions %}
-					{% for k, attendeeAnswers in __SELF__.getEventAttendeeAnswers(event.id, attendee.id) %}
-						{% if k == o_question.id %}
-						<td>
-							{% for answerId, answer in attendeeAnswers %}
-								{{answer}}
-								{% if o_question.active == false %}
-									<a href="javascript:void(0);" onclick="onLoadEditFieldForm({{answerId}}, '{{answer}}', '{{o_question}}');" class="btn-danger">edit</a>
-								{% endif %}
-							{% endfor %}
-						</td>
-						{% endif %}
-					{% endfor %}
+		<tr>
+			<td><input type="checkbox" name="attendee" data-email="{{attendee.attendee_question_email}}" data-names="{{attendee.attendee_question_names}}" data-id="{{attendee.id}}" data-eventid="{{event.id}}"> </td>
+			<td>{{attendee.id}}</td>
+			{% for k, attendeeAnswers in __SELF__.getEventAttendees(event.id, attendee.id) %}
+			<td>
+				{% for answerId, answer in attendeeAnswers %}
+					{{answer|raw}}
 				{% endfor %}
-			</tr>
+			</td>
+			{% endfor %}
+		</tr>
 
 		{% endfor %}
+
+
+
 
 	</table>
 {% endfor %}

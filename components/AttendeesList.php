@@ -50,29 +50,36 @@ class AttendeesList extends ComponentBase
         return [];
     }
 
-    public function getEventAttendeeAnswers($eventId, $attendeeId){
+    public function getEventAttendees($eventId, $attendeeId){
+		if(!$eventId){
+			return \Redirect::to('/');
+		}
+
 		$orderQuestions = OrderQuestion::where('event_id', $eventId)->get()->toArray();
 		$attendee = Attendee::where('event_id', $eventId)->where('id', $attendeeId)->first();
-//		$attendees = Attendee::where('event_id', $eventId)->get();
+		$attendeeQuestions = $attendee->attendee_questions()->get()->toArray();
 		$items = [];
 
-		$items[0][0] = 'Attendee ID';
-		foreach($orderQuestions as $orderQuestion){
-			$items[0][$orderQuestion['id']] = strip_tags($orderQuestion['question']);
-//			foreach ($attendees as $attendee){
-				$attendeeQuestions = $attendee->attendee_questions()->get()->toArray();
-				foreach ($attendeeQuestions as $attendeeQuestion){
-					if($orderQuestion['id'] == $attendeeQuestion['order_question_id']){
-						$items[$attendee['id']][0] = $attendee['id'];
+		foreach($orderQuestions as $orderQuestion) {
+
+			$orderQuestionId = $orderQuestion['id'];
+			$items[0][$orderQuestionId] = strip_tags($orderQuestion['question']);
+
+				foreach ($attendeeQuestions as $attendeeQuestion) {
+					if($orderQuestionId == $attendeeQuestion['order_question_id']){
+						$isActive = $orderQuestion['active'];
 						$answer = [];
-						foreach ($attendeeQuestion['attendee_answers'] as $attendeeAnswer){
+						foreach ($attendeeQuestion['attendee_answers'] as $attendeeAnswer) {
+							if(!$isActive){
+								$attendeeAnswer['answer'] .= ' <a href="javascript:void(0);" onclick="onLoadEditFieldForm('. $attendeeAnswer['id'] .', \'' . $attendeeAnswer['answer'] . '\', '. $orderQuestionId .');" class="btn-danger">edit</a>';
+							}
 							$answer[$attendeeAnswer['id']] = $attendeeAnswer['answer'];
 						}
-						$items[$attendee['id']][$orderQuestion['id']] = $answer;
+						$items[$attendee['id']][$orderQuestionId] = $answer;
 					}
 				}
-//			}
 		}
+
 
 		foreach ($items as $k => $subArray){
 
@@ -89,10 +96,7 @@ class AttendeesList extends ComponentBase
 
 		return $items[$attendeeId];
 
-
-//    	return Entry::where('active', true)->get();
 	}
-
 
     public function getEntry(){
     	$eventId = $this->param('event_id');
@@ -165,8 +169,9 @@ class AttendeesList extends ComponentBase
 	public function onLoadEditFieldForm(){
     	$answerId = (int)post('answer_id');
     	$answerValue = post('answer_value');
+    	$orderQuestionId = post('order_question_id');
 
-		$questionData = json_decode(post('order_question_data'), true);
+		$questionData = OrderQuestion::where('id', $orderQuestionId)->first()->toArray();
 		$fieldType = $questionData['type'];
 		$type = self::FIELD_TYPES[$fieldType];
 		$name = $questionData['name'];
@@ -211,7 +216,7 @@ class AttendeesList extends ComponentBase
 		$this->page['field'] = $field;
 		$this->page['field_name'] = $name;
 		$this->page['attendee_answer_id'] = $answerId;
-		$this->page['label'] = 'my test label';
+		$this->page['label'] = strip_tags($questionData['question']);
 	}
 
 

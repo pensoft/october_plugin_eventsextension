@@ -120,14 +120,14 @@ function onExportAttendees() {
 }
 
 
-function onLoadEditFieldForm(pAnswerId, pAnswerValue, pOrderQuestionData) {
+function onLoadEditFieldForm(pAnswerId, pAnswerValue, pOrderQuestionId) {
 	$.request('onLoadEditFieldForm', {
 		update: { '@_popup-edit-field-form': '#popupEditFieldForm',
 		},
 		data: {
 			'answer_id': pAnswerId,
 			'answer_value': pAnswerValue,
-			'order_question_data': pOrderQuestionData,
+			'order_question_id': pOrderQuestionId,
 		},
 	}).then(response => {
 		$('#popupEditFieldForm').modal('show');

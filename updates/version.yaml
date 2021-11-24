@@ -108,3 +108,5 @@
     - 'Backend lists fixes; Form submit fixes'
 1.0.40:
     - 'New component AttendeesList'
+1.0.41:
+    - 'Component AttendeesList fixes'
