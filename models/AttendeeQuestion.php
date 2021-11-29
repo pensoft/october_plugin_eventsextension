@@ -43,6 +43,7 @@ class AttendeeQuestion extends Model
 	];
 	public $hasOne = [
 		'attendee_answer' => 'Pensoft\Eventsextension\Models\AttendeeAnswer',
+
 	];
 
 	public function scopeByEmail($query){

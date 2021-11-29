@@ -107,14 +107,15 @@ class AttendeesList extends ComponentBase
 	}
 
     public function onLoadEmailForm(){
+		$mails = array();
     	if(post('attendees')){
     		$attendees = post('attendees');
-    		$mails = array();
 			foreach ($attendees as $attendeeQuestion){
 				$mails[$attendeeQuestion['attendee_id']] = $attendeeQuestion['attendee_answers'][0]['answer'];
 			}
 		}
-		$this->page['mailsArr'] = json_encode($mails);
+//		$this->page['mailsArr'] = json_encode($mails);
+		$this->page['recipientsData'] = json_encode($mails);
 		$this->page['mailsStr'] = implode(', ', $mails);
 	}
 
@@ -138,15 +139,30 @@ class AttendeesList extends ComponentBase
 
 
 		foreach($recipients as $attendeeId => $mail){
+			$attendeeAnswers = (new AttendeeQuestion())::where('attendee_id', $attendeeId)->get()->toArray();
 			$recipientEmail = trim($mail);
+			$theMessage = $messageBody;
+			foreach($attendeeAnswers as $attAnswer){
+				$orderQuestion = (new OrderQuestion())::where('id', $attAnswer['order_question_id'])->first()->toArray();
+				$answer_label = $orderQuestion['name'];
+				$answer_value = implode(', ', array_map(function ($entry) {
+					return strip_tags($entry['answer']);
+				}, $attAnswer['attendee_answers']));
+
+				$theMessage = str_replace('{'. $answer_label .'}', $answer_value, $theMessage);
+
+			}
+
+
 			$vars = [];
-			\Mail::send(['raw' => '<div>'.$messageBody.'</div>'], $vars, function($message)  use ($recipientEmail, $subject) {
+			\Mail::send(['raw' => '<div>'.$theMessage.'</div>'], $vars, function($message)  use ($recipientEmail, $subject) {
 				$message->from(MailSetting::get('sender_email'), MailSetting::get('sender_name'));
 				$message->replyTo(MailSetting::get('sender_email'), MailSetting::get('sender_name'));
 				$message->to($recipientEmail);
 				$message->subject($subject);
 
 			});
+
 			sleep(1); // TODO remove this line
 
 			if (count(\Mail::failures()) > 0){

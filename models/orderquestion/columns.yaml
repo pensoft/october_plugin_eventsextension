@@ -12,11 +12,17 @@ columns:
         searchable: true
         sortable: true
     question:
-        label: question
+        label: Question
         type: text
         searchable: true
         sortable: true
         select: regexp_replace(question, E'<[^>]+>', '', 'gi')
+    name:
+        label: Name
+        type: text
+        searchable: true
+        sortable: true
+        select: name
     active:
         label: 'Visible in form'
         type: number

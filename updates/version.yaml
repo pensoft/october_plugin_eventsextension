@@ -112,3 +112,5 @@
     - 'Component AttendeesList fixes'
 1.0.42:
     - 'Component AttendeesList table header text limit'
+1.0.43:
+    - 'email template get answers data and replace'
