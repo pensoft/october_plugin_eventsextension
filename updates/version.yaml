@@ -116,3 +116,6 @@
     - 'email template get answers data and replace'
 1.0.44:
     - 'Refresh after mail sent'
+1.0.45:
+    - 'new table to stoe emails'
+    - create_table_eventsextention_emails.php

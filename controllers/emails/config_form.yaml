@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Email
+
+# Model Form Field configuration
+form: $/pensoft/eventsextension/models/email/fields.yaml
+
+# Model Class name
+modelClass: Pensoft\Eventsextension\Models\Email
+
+# Default redirect location
+defaultRedirect: pensoft/eventsextension/emails
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: pensoft/eventsextension/emails/update/:id
+    redirectClose: pensoft/eventsextension/emails
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: pensoft/eventsextension/emails
+    redirectClose: pensoft/eventsextension/emails
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

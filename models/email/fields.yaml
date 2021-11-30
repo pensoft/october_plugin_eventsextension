@@ -1,0 +1,14 @@
+fields:
+    subject:
+        label: Subject
+        span: full
+        disabled: 1
+        readOnly: 1
+        type: text
+    body:
+        label: Body
+        size: giant
+        span: full
+        disabled: 1
+        readOnly: 1
+        type: richeditor

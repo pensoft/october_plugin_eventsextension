@@ -173,7 +173,7 @@ class AttendeesList extends ComponentBase
 			$email = new Email();
 			$email->subject = $subject;
 			$email->attendee_id = $attendeeId;
-			$email->body = $messageBody;
+			$email->body = $theMessage;
 			$email->email = $mail;
 			$email->save();
 		}
