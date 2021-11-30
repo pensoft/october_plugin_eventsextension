@@ -119,3 +119,6 @@
 1.0.45:
     - 'new table to stoe emails'
     - create_table_eventsextention_emails.php
+1.0.46:
+    - 'new column attendee_id in the emails table'
+    - update_table_eventsextension_emails.php
