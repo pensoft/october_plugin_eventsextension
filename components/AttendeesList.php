@@ -149,7 +149,7 @@ class AttendeesList extends ComponentBase
 					return strip_tags($entry['answer']);
 				}, $attAnswer['attendee_answers']));
 
-				$theMessage = str_replace('{'. $answer_label .'}', $answer_value, $theMessage);
+				$theMessage = str_ireplace('{'. $answer_label .'}', $answer_value, $theMessage);
 
 			}
 
@@ -178,7 +178,8 @@ class AttendeesList extends ComponentBase
 			$email->save();
 		}
 
-		\Flash::success('Mail(s) sent');
+		\Flash::success('Email(s) sent successfully!');
+		return \Redirect::refresh();
 	}
 
 

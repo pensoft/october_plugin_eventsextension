@@ -114,3 +114,5 @@
     - 'Component AttendeesList table header text limit'
 1.0.43:
     - 'email template get answers data and replace'
+1.0.44:
+    - 'Refresh after mail sent'
