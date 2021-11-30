@@ -7,17 +7,21 @@ class UpdateTableEventsextensionEmails extends Migration
 {
 	public function up()
 	{
-		Schema::table('pensoft_eventsextension_emails', function($table)
-		{
-			$table->integer('attendee_id');
-		});
+		if (!Schema::hasColumn('pensoft_eventsextension_emails', 'attendee_id')) {
+			Schema::table('pensoft_eventsextension_emails', function($table)
+			{
+				$table->integer('attendee_id');
+			});
+		}
+
 	}
 
 	public function down()
 	{
-		Schema::table('pensoft_eventsextension_emails', function($table)
-		{
-			$table->dropColumn('attendee_id');
-		});
+		if (Schema::hasColumn('pensoft_eventsextension_emails', 'attendee_id')) {
+			Schema::table('pensoft_eventsextension_emails', function ($table) {
+				$table->dropColumn('attendee_id');
+			});
+		}
 	}
 }
