@@ -125,3 +125,5 @@
 1.0.47:
     - 'new column attendee_id in the emails table'
     - update_table_eventsextension_emails.php
+1.0.48:
+    - 'Dont close email popup form after send'

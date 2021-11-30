@@ -179,7 +179,7 @@ class AttendeesList extends ComponentBase
 		}
 
 		\Flash::success('Email(s) sent successfully!');
-		return \Redirect::refresh();
+//		return \Redirect::refresh();
 	}
 
 
