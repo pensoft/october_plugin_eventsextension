@@ -1,6 +1,7 @@
 <?php namespace Pensoft\Eventsextension\Models;
 
 use Model;
+use Pensoft\Calendar\Models\Entry;
 use RainLab\Location\Models\Country;
 
 /**
@@ -35,7 +36,7 @@ class OrderQuestion extends Model
     ];
 
 	public $belongsTo = [
-		'event' => 'Pensoft\Calendar\Models\Entry',
+		'event' => ['Pensoft\Calendar\Models\Entry', 'order' => 'id desc'],
 		'ticket' => 'Pensoft\Eventsextension\Models\Ticket',
 	];
 	
@@ -60,6 +61,11 @@ class OrderQuestion extends Model
 			});
 			return $countries;
 		}
+	}
+
+	public function getEventNameAttribute(){
+		$eventData = (new Entry())::where('id', $this->event_id)->first();
+		return strip_tags($this->name).' - visible (' . ($this->active ? 'true' : 'false') . ') - ['.$eventData->title.']';
 	}
 
 

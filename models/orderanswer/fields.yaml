@@ -1,9 +1,7 @@
 fields:
     order_question:
         label: 'Order Question'
-        nameFrom: question
-        select: concat(regexp_replace(question, E'<[^>]+>', '', 'gi') || ' - visible (' || active || ')')
-        descriptionFrom: description
+        nameFrom: event_name
         span: auto
         type: relation
     answer:

@@ -127,3 +127,5 @@
     - update_table_eventsextension_emails.php
 1.0.48:
     - 'Dont close email popup form after send'
+1.0.49:
+    - 'Display event name in order answers definition; In Order questions order events by id desc'
