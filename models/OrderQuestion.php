@@ -64,8 +64,13 @@ class OrderQuestion extends Model
 	}
 
 	public function getEventNameAttribute(){
-		$eventData = (new Entry())::where('id', $this->event_id)->first();
-		return strip_tags($this->name).' - visible (' . ($this->active ? 'true' : 'false') . ') - ['.$eventData->title.']';
+		if((int)$this->event_id){
+			$eventData = (new Entry())::where('id', (int)$this->event_id)->first();
+			return strip_tags($this->name).' - visible (' . ($this->active ? 'true' : 'false') . ') - ['.$eventData->title.']';
+		}else{
+			return strip_tags($this->name).' - visible (' . ($this->active ? 'true' : 'false') . ') - no event object!';
+		}
+
 	}
 
 
