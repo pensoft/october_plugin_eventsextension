@@ -1,0 +1,6 @@
+scopes:
+  event:
+    label: Event
+    modelClass: Pensoft\Calendar\Models\Entry
+    conditions: event_id = :filtered
+    nameFrom: title

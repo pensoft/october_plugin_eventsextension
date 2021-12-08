@@ -69,7 +69,8 @@ class Plugin extends PluginBase
 				'Pensoft\Eventsextension\Models\OrderQuestion',
 				'table' => 'pensoft_eventsextension_orderquestions',
 				'key'      => 'event_id',
-				'otherKey' => 'id'
+				'otherKey' => 'id',
+				'scope' => 'notDeletedEvents'
 			];
 
 			$model->hasMany['attendees'] = [
@@ -77,6 +78,10 @@ class Plugin extends PluginBase
 				'table' => 'pensoft_eventsextension_attendees',
 				'key'      => 'event_id',
 			];
+
+			$model->addDynamicMethod('scopeNotdeleted', function($query) {
+				return $query->where('deleted_at', null);
+			});
 		});
 
 		if(class_exists('\Pensoft\Calendar\Controllers\Entries')){

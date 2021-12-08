@@ -36,7 +36,7 @@ class OrderQuestion extends Model
     ];
 
 	public $belongsTo = [
-		'event' => ['Pensoft\Calendar\Models\Entry', 'order' => 'id desc'],
+		'event' => ['Pensoft\Calendar\Models\Entry', 'scope' => 'notdeleted', 'order' => 'id desc'],
 		'ticket' => 'Pensoft\Eventsextension\Models\Ticket',
 	];
 	
@@ -64,13 +64,15 @@ class OrderQuestion extends Model
 	}
 
 	public function getEventNameAttribute(){
-		if((int)$this->event_id){
-			$eventData = (new Entry())::where('id', (int)$this->event_id)->first();
-			return strip_tags($this->name).' - visible (' . ($this->active ? 'true' : 'false') . ') - ['.(int)$this->event_id.']';
-		}else{
-			return strip_tags($this->name).' - visible (' . ($this->active ? 'true' : 'false') . ') - no event object!';
+		$eventData = (new Entry())::where('id', (int)$this->event_id)->notdeleted()->first();
+		if(is_object($eventData)){
+			return strip_tags($this->name).' - visible (' . ($this->active ? 'true' : 'false') . ') - ['.$eventData->title.']';
 		}
+	}
 
+	public function scopeNotDeletedEvents($query){
+		$notDeletedEvents = (new Entry())::notdeleted()->get()->pluck('id');
+		return $query->whereIn('event_id', $notDeletedEvents);
 	}
 
 

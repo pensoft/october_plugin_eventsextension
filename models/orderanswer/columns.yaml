@@ -2,10 +2,19 @@ columns:
     id:
         label: id
         type: number
+    event_title[title]:
+        label: Event
+        valueFrom: event_title
+        defaultFrom: event_title
+        #        type: partial
+        sortable: true
     order_question:
         label: 'Order question'
-        relation: order_question
+        type: text
+        searchable: true
+        sortable: true
         select: regexp_replace(question, E'<[^>]+>', '', 'gi')
+        relation: order_question
     answer:
         label: answer
         type: text

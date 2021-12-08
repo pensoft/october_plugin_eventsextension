@@ -28,6 +28,6 @@ class Ticket extends Model
     ];
 
 	public $belongsTo = [
-		'event' => 'Pensoft\Calendar\Models\Entry',
+		'event' => ['Pensoft\Calendar\Models\Entry', 'scope' => 'notdeleted', 'order' => 'id desc'],
 	];
 }

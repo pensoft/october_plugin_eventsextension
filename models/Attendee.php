@@ -30,7 +30,7 @@ class Attendee extends Model
     public $belongsTo = [
     	'attendee_profile' => 'Pensoft\Eventsextension\Models\Attendee',
 		'order' => 'Pensoft\Eventsextension\Models\Order',
-		'event' => 'Pensoft\Calendar\Models\Entry',
+		'event' => ['Pensoft\Calendar\Models\Entry', 'scope' => 'notdeleted', 'order' => 'id desc'],
 	];
 
     public $hasMany = [

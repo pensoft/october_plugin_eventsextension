@@ -10,6 +10,7 @@ fields:
         nameFrom: title
         descriptionFrom: description
         span: auto
+        readOnly: 1
         type: relation
     status:
         label: Status

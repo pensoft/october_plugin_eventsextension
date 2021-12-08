@@ -1,6 +1,7 @@
 <?php namespace Pensoft\Eventsextension\Models;
 
 use Model;
+use Pensoft\Calendar\Models\Entry;
 use RainLab\Location\Models\Country;
 
 /**
@@ -32,6 +33,12 @@ class OrderAnswer extends Model
     ];
 
 	public $belongsTo = [
-		'order_question' => 'Pensoft\Eventsextension\Models\OrderQuestion',
+		'order_question' => ['Pensoft\Eventsextension\Models\OrderQuestion', 'scope' => 'notDeletedEvents'],
 	];
+
+	public function getEventTitleAttribute()
+	{
+		$answer = self::find($this->id);
+		return $answer->order_question->event;
+	}
 }

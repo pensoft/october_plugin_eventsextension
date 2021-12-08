@@ -32,7 +32,7 @@ class AttendeeQuestion extends Model
     ];
 
 	public $belongsTo = [
-		'event' => 'Pensoft\Calendar\Models\Entry',
+		'event' => ['Pensoft\Calendar\Models\Entry', 'scope' => 'notdeleted'],
 		'attendee' => 'Pensoft\Eventsextension\Models\Attendee',
 		'order_question' => 'Pensoft\Eventsextension\Models\OrderQuestion',
 		'ticket' => 'Pensoft\Eventsextension\Models\Ticket',
