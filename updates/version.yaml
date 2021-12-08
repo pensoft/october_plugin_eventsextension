@@ -131,3 +131,5 @@
     - 'Display event name in order answers definition; In Order questions order events by id desc'
 1.0.50:
     - 'Check for event_id'
+1.0.51:
+    - 'get event_id instead of name'

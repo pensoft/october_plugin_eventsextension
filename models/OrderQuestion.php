@@ -66,7 +66,7 @@ class OrderQuestion extends Model
 	public function getEventNameAttribute(){
 		if((int)$this->event_id){
 			$eventData = (new Entry())::where('id', (int)$this->event_id)->first();
-			return strip_tags($this->name).' - visible (' . ($this->active ? 'true' : 'false') . ') - ['.$eventData->title.']';
+			return strip_tags($this->name).' - visible (' . ($this->active ? 'true' : 'false') . ') - ['.(int)$this->event_id.']';
 		}else{
 			return strip_tags($this->name).' - visible (' . ($this->active ? 'true' : 'false') . ') - no event object!';
 		}
