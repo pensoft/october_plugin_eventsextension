@@ -135,3 +135,5 @@
     - 'get event_id instead of name'
 1.0.52:
     - 'Applyed events filters and scopes'
+1.0.53:
+    - 'Filter sql fix'

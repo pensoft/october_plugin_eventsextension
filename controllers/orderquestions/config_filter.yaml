@@ -2,5 +2,5 @@ scopes:
   event:
     label: Event
     modelClass: Pensoft\Calendar\Models\Entry
-    conditions: event_id = :filtered
+    conditions: event_id in (:filtered)
     nameFrom: title
