@@ -137,3 +137,5 @@
     - 'Applyed events filters and scopes'
 1.0.53:
     - 'Filter sql fix'
+1.0.54:
+    - 'Duplicate event'

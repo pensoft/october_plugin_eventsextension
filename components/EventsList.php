@@ -2,6 +2,8 @@
 
 use Cms\Classes\ComponentBase;
 use Pensoft\Calendar\Models\Entry;
+use Pensoft\Eventsextension\Models\OrderAnswer;
+use Pensoft\Eventsextension\Models\OrderQuestion;
 
 /**
  * EventsList Component
@@ -25,5 +27,45 @@ class EventsList extends ComponentBase
 	{
 		$events = Entry::where('active', true)->orderBy('start', 'desc')->get();
 		return $events;
+	}
+
+	public function onDuplicateEvent(){
+    	$eventId = post('event_id');
+
+    	if(!$eventId){
+    		return;
+		}
+
+		$originalEvent = Entry::where('id', $eventId)->first();
+
+		$cloneEvent = $originalEvent->replicate();
+		$cloneEvent->title = "COPY of ".$cloneEvent->title;
+		$cloneEvent->slug = now()->timestamp."_".$cloneEvent->slug;
+		$cloneEvent->id = Entry::withTrashed()->max('id') + 1;
+		$cloneEvent->save();
+
+		$originalOrderQuestions = $originalEvent->order_questions;
+
+		foreach($originalOrderQuestions as $originalOrderQuestion){
+			$cloneOrderQuestion = $originalOrderQuestion->replicate();
+			$cloneOrderQuestion->event_id = $cloneEvent->id;
+			$cloneOrderQuestion->id = OrderQuestion::max('id') + 1;
+			$cloneOrderQuestion->save();
+
+			$originalOrderAnswers = OrderAnswer::where('order_question_id', $originalOrderQuestion->id)->get();
+
+			if($originalOrderAnswers){
+				foreach($originalOrderAnswers as $orioginalOrderAnsswer){
+					$cloneOrderAnswer = $orioginalOrderAnsswer->replicate();
+					$cloneOrderAnswer->order_question_id = $cloneOrderQuestion->id;
+					$cloneOrderAnswer->id = OrderAnswer::max('id') + 1;
+					$cloneOrderAnswer->save();
+				}
+			}
+
+		}
+
+		\Flash::success('Event cloned');
+		return \Redirect::to('/events/'.$cloneEvent->slug);
 	}
 }
