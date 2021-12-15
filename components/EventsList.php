@@ -41,6 +41,7 @@ class EventsList extends ComponentBase
 		$cloneEvent = $originalEvent->replicate();
 		$cloneEvent->title = "COPY of ".$cloneEvent->title;
 		$cloneEvent->slug = now()->timestamp."_".$cloneEvent->slug;
+		$cloneEvent->active = false;
 		$cloneEvent->id = Entry::withTrashed()->max('id') + 1;
 		$cloneEvent->save();
 

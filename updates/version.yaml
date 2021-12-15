@@ -139,3 +139,5 @@
     - 'Filter sql fix'
 1.0.54:
     - 'Duplicate event'
+1.0.55:
+    - 'Duplicate event and set inactive state'
