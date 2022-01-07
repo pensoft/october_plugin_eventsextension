@@ -39,6 +39,8 @@ class OrderAnswer extends Model
 	public function getEventTitleAttribute()
 	{
 		$answer = self::find($this->id);
-		return $answer->order_question->event;
+		if(is_object($answer->order_question)){
+			return $answer->order_question->event;
+		}
 	}
 }

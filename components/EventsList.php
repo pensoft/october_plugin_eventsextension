@@ -1,6 +1,7 @@
 <?php namespace Pensoft\Eventsextension\Components;
 
 use Cms\Classes\ComponentBase;
+use Illuminate\Support\Facades\DB;
 use Pensoft\Calendar\Models\Entry;
 use Pensoft\Eventsextension\Models\OrderAnswer;
 use Pensoft\Eventsextension\Models\OrderQuestion;
@@ -65,6 +66,12 @@ class EventsList extends ComponentBase
 			}
 
 		}
+
+		DB::statement('SELECT setval(\'pensoft_eventsextension_order_question_id_seq\', (SELECT MAX(id)
+ FROM pensoft_eventsextension_order_question))');
+
+		DB::statement('SELECT setval(\'pensoft_eventsextension_order_answer_id_seq\', (SELECT MAX(id)
+ FROM pensoft_eventsextension_order_answer))');
 
 		\Flash::success('Event cloned');
 		return \Redirect::to('/events/'.$cloneEvent->slug);
