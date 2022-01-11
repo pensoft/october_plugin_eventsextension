@@ -143,3 +143,6 @@
     - 'Duplicate event and set inactive state'
 1.0.56:
     - 'Fixed order answers list in administration, when question is deleted'
+1.0.57:
+    - 'Created table pensoft_eventsextension_events_users'
+    - builder_table_create_pensoft_eventsextension_events_users.php

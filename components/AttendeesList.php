@@ -11,6 +11,7 @@ use Pensoft\Eventsextension\Models\Email;
 use Maatwebsite\Excel\Facades\Excel;
 use Pensoft\Eventsextension\Models\OrderQuestion;
 use Backend\Facades\BackendAuth;
+use RainLab\User\Facades\Auth;
 use System\Models\MailSetting;
 
 /**
@@ -19,6 +20,8 @@ use System\Models\MailSetting;
 class AttendeesList extends ComponentBase
 {
 
+	public $loggedIn;
+	public $eventId;
 	const FIELD_TYPES = [
 		'p' => 'p', //input one
 		't' => 'text', // input one
@@ -37,10 +40,18 @@ class AttendeesList extends ComponentBase
     }
 
 	public function onRun(){
-		$loggedIn= !empty(BackendAuth::getUser()) ? true : false;
-		if(!$loggedIn){
+		$this->loggedIn = !empty(BackendAuth::getUser()) ? true : false;
+
+		$this->eventId = $this->param('event_id');
+
+		if(!$this->eventId){
 			return \Redirect::to('/');
 		}
+
+		if(!$this->userCanAccessAttendeesList()){
+			return \Redirect::to('/');
+		}
+
 		$this->addJs('/plugins/pensoft/eventsextension/assets/js/custom.js');
 		$this->addCss('/plugins/pensoft/eventsextension/assets/css/custom.css');
 	}
@@ -98,12 +109,25 @@ class AttendeesList extends ComponentBase
 
 	}
 
+
     public function getEntry(){
-    	$eventId = $this->param('event_id');
-		if(!$eventId){
-			return \Redirect::to('/');
+    	return Entry::where('id', $this->eventId)->get();
+	}
+
+    public function userCanAccessAttendeesList(){
+		if($this->loggedIn){
+			return true;
 		}
-    	return Entry::where('id', $eventId)->get();
+
+		$event = Entry::where('id', $this->eventId)->first();
+
+		$frontEndUser = Auth::getUser();
+
+		if($frontEndUser && is_object($event) && $event->users()->where('id', $frontEndUser->id)->first()){
+			return true;
+		}
+
+    	return false;
 	}
 
     public function onLoadEmailForm(){

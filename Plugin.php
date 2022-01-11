@@ -5,7 +5,9 @@ use Pensoft\Calendar\Controllers\Entries;
 use Pensoft\Calendar\Models\Entry;
 use Pensoft\Calendar\Models\Event;
 use Pensoft\Eventsextension\Models\Tag;
+use RainLab\User\Models\User;
 use System\Classes\PluginBase;
+use Cms\Classes\Theme;
 
 /**
  * Eventsextension Plugin Information File
@@ -13,7 +15,7 @@ use System\Classes\PluginBase;
 class Plugin extends PluginBase
 {
 
-	public $require = ['Pensoft.Calendar', 'Rainlab.Location'];
+	public $require = ['Pensoft.Calendar', 'Rainlab.Location', 'Rainlab.User'];
 
     /**
      * Returns information about this plugin.
@@ -65,6 +67,13 @@ class Plugin extends PluginBase
 				'otherKey' => 'tag_id'
 			];
 
+			$model->belongsToMany['users'] = [
+				'Rainlab\User\Models\User',
+				'table' => 'pensoft_eventsextension_events_users',
+				'key'      => 'entry_id',
+				'otherKey' => 'user_id'
+			];
+
 			$model->hasMany['order_questions'] = [
 				'Pensoft\Eventsextension\Models\OrderQuestion',
 				'table' => 'pensoft_eventsextension_orderquestions',
@@ -78,6 +87,13 @@ class Plugin extends PluginBase
 				'table' => 'pensoft_eventsextension_attendees',
 				'key'      => 'event_id',
 			];
+
+//			$model->hasMany['users'] = [
+//				'Rainlab\User\Models\User',
+//				'table' => 'pensoft_eventsextension_events_users',
+//				'key'      => 'entry_id',
+//				'otherKey'    => 'user_id',
+//			];
 
 			$model->addDynamicMethod('scopeNotdeleted', function($query) {
 				return $query->where('deleted_at', null);
@@ -170,6 +186,14 @@ class Plugin extends PluginBase
 						'options' => Models\Tag::all()->lists('name', 'id'),
 						'nameFrom' => 'name'
 					],
+					'users' => [
+						'label' => 'Users',
+						'span'  => 'auto',
+						'type'  => 'relation',
+						'select'  => 'CONCAT(name, \' \', surname, \' - \', email)',
+						'tab'  => 'rainlab.user::lang.user.account',
+						'options' => \Rainlab\User\Models\User::all()->lists('name', 'id'),
+					],
 
 				]);
 
@@ -177,6 +201,38 @@ class Plugin extends PluginBase
 				$form->removeField('index');
 				$form->removeField('identifier');
 				$form->removeField('all_day');
+
+			});
+		}
+
+
+		//Extending User Model and add mailing group relation
+		User::extend(function($model) {
+			$theme = Theme::getActiveTheme();
+			$model->belongsToMany['events'] = [
+				'Pensoft\Calendar\Models\Entry',
+				'table' => 'pensoft_eventsextension_events_users',
+				'order' => 'title'
+			];
+			if (!$model instanceof User) return;
+
+		});
+
+		//Extending User Plugin FormFields and add the events field
+		if (class_exists('\Rainlab\User\Controllers\Users') && class_exists('\Pensoft\Calendar\Models\Entry')) {
+			\Rainlab\User\Controllers\Users::extendFormFields(function ($form, $model, $context) {
+				if (!$model instanceof User) return;
+
+				$form->addTabFields([
+					'events' => [
+						'label' => 'Pensoft Events',
+						'span'  => 'auto',
+						'type'  => 'relation',
+						'tab'  => 'rainlab.user::lang.user.account',
+						'options' => \Pensoft\Calendar\Models\Entry::all()->lists('title', 'id'),
+						'nameFrom' => 'title'
+					],
+				]);
 
 			});
 		}
