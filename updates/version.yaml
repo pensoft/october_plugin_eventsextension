@@ -146,3 +146,5 @@
 1.0.57:
     - 'Created table pensoft_eventsextension_events_users'
     - builder_table_create_pensoft_eventsextension_events_users.php
+1.0.58:
+    - 'Created table pensoft_eventsextension_events_users'

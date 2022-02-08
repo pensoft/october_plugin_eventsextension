@@ -45,10 +45,24 @@ class QuestionFormGenerator {
 			}
 			$label = "<label for=\"${name}\">${_question}</label>\n";
 			$field = "";
-			if($type == 'p'){//todo textarea
-				if($is_required){
-					$field = "<input name=\"${name}\" type=\"text\"  ${required_} />\n";
-				}
+			if($type == 'p'){
+				$field = "<textarea name=\"${name}\" id=\"${name}\" rows=\"12\" required=\"required\"></textarea>
+								<script>
+									// instance, using default configuration.
+									CKEDITOR.replace( \"${name}\" );
+									var required = parseInt(${is_required});
+									if(required){
+										 $(\"form\").submit( function(e) {
+											var messageLength = CKEDITOR.instances[\"${name}\"].getData().replace(/(<([^>]+)>)/gi, '').length;
+											var instance = CKEDITOR.instances[\"${name}\"].name;
+											if( !messageLength ) {
+												alert( 'Please fill out the '+ instance +' field.' );
+												e.preventDefault();
+											}
+										});
+									}
+
+								</script>\n";
 			}
 			if($type == 'text' || $type == 'email'){
 				$field = "<input name=\"${name}\" type=\"${type}\"  ${required_} />\n";
