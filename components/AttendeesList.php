@@ -70,42 +70,44 @@ class AttendeesList extends ComponentBase
 		$attendee = Attendee::where('event_id', $eventId)->where('id', $attendeeId)->first();
 		$attendeeQuestions = $attendee->attendee_questions()->get()->toArray();
 		$items = [];
+		if(count($attendeeQuestions)){
+			foreach($orderQuestions as $orderQuestion) {
 
-		foreach($orderQuestions as $orderQuestion) {
+				$orderQuestionId = $orderQuestion['id'];
+				$items[0][$orderQuestionId] = strip_tags($orderQuestion['question']);
 
-			$orderQuestionId = $orderQuestion['id'];
-			$items[0][$orderQuestionId] = strip_tags($orderQuestion['question']);
-
-				foreach ($attendeeQuestions as $attendeeQuestion) {
-					if($orderQuestionId == $attendeeQuestion['order_question_id']){
-						$isActive = $orderQuestion['active'];
-						$answer = [];
-						foreach ($attendeeQuestion['attendee_answers'] as $attendeeAnswer) {
-							if(!$isActive){
-								$attendeeAnswer['answer'] .= ' <a href="javascript:void(0);" onclick="onLoadEditFieldForm('. $attendeeAnswer['id'] .', \'' . $attendeeAnswer['answer'] . '\', '. $orderQuestionId .');" class="btn-danger">edit</a>';
+					foreach ($attendeeQuestions as $attendeeQuestion) {
+						if($orderQuestionId == $attendeeQuestion['order_question_id']){
+							$isActive = $orderQuestion['active'];
+							$answer = [];
+							if(count($attendeeQuestion['attendee_answers'])){
+								foreach ($attendeeQuestion['attendee_answers'] as $attendeeAnswer) {
+									if(!$isActive){
+										$attendeeAnswer['answer'] .= ' <a href="javascript:void(0);" onclick="onLoadEditFieldForm('. $attendeeAnswer['id'] .', \'' . $attendeeAnswer['answer'] . '\', '. $orderQuestionId .');" class="btn-danger">edit</a>';
+									}
+									$answer[$attendeeAnswer['id']] = $attendeeAnswer['answer'];
+								}
 							}
-							$answer[$attendeeAnswer['id']] = $attendeeAnswer['answer'];
+
+							$items[$attendee['id']][$orderQuestionId] = $answer;
 						}
-						$items[$attendee['id']][$orderQuestionId] = $answer;
+					}
+			}
+
+			foreach ($items as $k => $subArray){
+
+				if($k > 0){
+					if($diff = array_diff_key($items[0], $items[$k])){
+						$key = key($diff);
+						$offset = array_search($key, array_keys($items[0]));
+						$items[$k] = array_slice($items[$k], 0, $offset, true) +
+							[$key => []] +
+							array_slice($items[$k], $offset, count($items[$k]) - 1, true) ;
 					}
 				}
-		}
-
-
-		foreach ($items as $k => $subArray){
-
-			if($k > 0){
-				if($diff = array_diff_key($items[0], $items[$k])){
-					$key = key($diff);
-					$offset = array_search($key, array_keys($items[0]));
-					$items[$k] = array_slice($items[$k], 0, $offset, true) +
-						[$key => []] +
-						array_slice($items[$k], $offset, count($items[$k]) - 1, true) ;
-				}
 			}
+			return $items[$attendeeId];
 		}
-
-		return $items[$attendeeId];
 
 	}
 
