@@ -149,8 +149,11 @@
 1.0.58:
     - 'Created table pensoft_eventsextension_events_users'
 1.0.59:
-    - 'textarea'
+    - textarea
 1.0.60:
     - 'missing attendee fix'
 1.0.61:
     - 'missing attendee frontend list fix'
+1.0.62:
+    - 'Updated table pensoft_eventsextension_attendee_answer'
+    - builder_table_update_pensoft_eventsextension_attendee_answer_2.php
