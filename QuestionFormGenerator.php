@@ -46,7 +46,7 @@ class QuestionFormGenerator {
 			$label = "<label for=\"${name}\">${_question}</label>\n";
 			$field = "";
 			if($type == 'p'){
-				$field = "<textarea name=\"${name}\" id=\"${name}\" rows=\"12\" required=\"required\"></textarea>
+				$field = "<textarea name=\"${name}\" id=\"${name}\" rows=\"12\"></textarea>
 								<script>
 									// instance, using default configuration.
 									CKEDITOR.replace( \"${name}\" );

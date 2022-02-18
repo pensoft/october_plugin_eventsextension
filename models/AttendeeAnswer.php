@@ -40,7 +40,11 @@ class AttendeeAnswer extends Model
 
 	public function getEventTitleAttribute()
 	{
+
 		$answer = self::find($this->id);
-		return $answer->attendee_question->event;
+		if(is_object($answer->attendee_question)){
+			return $answer->attendee_question->event;
+		}
+		return '';
 	}
 }
