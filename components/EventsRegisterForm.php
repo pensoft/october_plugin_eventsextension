@@ -2,6 +2,7 @@
 
 use Cms\Classes\ComponentBase;
 use Exception;
+use Multiwebinc\Recaptcha\Validators\RecaptchaValidator;
 use Pensoft\Calendar\Models\Entry;
 use Pensoft\Eventsextension\Models\Attendee;
 use Pensoft\Eventsextension\Models\AttendeeAnswer;
@@ -75,6 +76,11 @@ class EventsRegisterForm extends ComponentBase
 				$arrRequired[$q['name']] .= '|email';
 			}
 		}
+		$arrRequired['g-recaptcha-response'] = [
+			'required',
+			new RecaptchaValidator(),
+		];
+
 		$validator = \Validator::make(
 			$form = \Input::all(), $arrRequired
 		);

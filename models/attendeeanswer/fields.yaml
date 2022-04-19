@@ -5,15 +5,16 @@ fields:
         descriptionFrom: description
         select: 'regexp_replace(question, E''<[^>]+>'', '''', ''gi'')'
         span: auto
-        readOnly: 1
+        readOnly: 0
         type: relation
-    answer:
-        label: Answer
-        span: auto
-        type: text
     order:
         label: 'Sort order'
         span: auto
         default: '1'
         type: text
         comment: 'small int'
+    answer:
+        label: Answer
+        size: large
+        span: auto
+        type: richeditor

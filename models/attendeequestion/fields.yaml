@@ -4,44 +4,45 @@ fields:
         nameFrom: id
         descriptionFrom: description
         span: auto
-        readOnly: 1
+        readOnly: 0
         type: relation
     order_question:
         label: 'Order question'
         nameFrom: name
         descriptionFrom: description
         span: auto
-        readOnly: 1
+        readOnly: 0
         type: relation
     event:
         label: Event
         nameFrom: title
         descriptionFrom: description
         span: auto
-        readOnly: 1
+        readOnly: 0
         type: relation
     question:
         label: 'Attendee question'
+        size: ''
         span: auto
-        disabled: 1
-        readOnly: 1
+        disabled: 0
+        readOnly: 0
         type: textarea
     type:
         label: Type
         span: auto
-        disabled: 1
-        readOnly: 1
+        disabled: 0
+        readOnly: 0
         type: text
         comment: 'p - plaintext, t - text, r - radio, d - dropdown, c - checkboxes'
     required:
         label: Required
         span: auto
-        disabled: 1
-        readOnly: 1
+        disabled: 0
+        readOnly: 0
         type: switch
     order:
         label: 'Sort order'
         span: auto
-        disabled: 1
-        readOnly: 1
+        disabled: 0
+        readOnly: 0
         type: text

@@ -161,3 +161,5 @@
     - builder_table_update_pensoft_eventsextension_attendee_answer_2.php
 1.0.64:
     - 'Recaptcha hidden field'
+1.0.65:
+    - 'Recaptcha validation'
