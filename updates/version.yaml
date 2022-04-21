@@ -163,3 +163,5 @@
     - 'Recaptcha hidden field'
 1.0.65:
     - 'Recaptcha validation'
+1.0.66:
+    - 'Removed recaptcha'

@@ -76,10 +76,10 @@ class EventsRegisterForm extends ComponentBase
 				$arrRequired[$q['name']] .= '|email';
 			}
 		}
-		$arrRequired['g-recaptcha-response'] = [
-			'required',
-			new RecaptchaValidator(),
-		];
+//		$arrRequired['g-recaptcha-response'] = [
+//			'required',
+//			new RecaptchaValidator(),
+//		];
 
 		$validator = \Validator::make(
 			$form = \Input::all(), $arrRequired
@@ -138,7 +138,6 @@ class EventsRegisterForm extends ComponentBase
 
 
 		}
-
 		return \Redirect::back()->with('message', $this->thankYouMessage);
 //		return \Redirect::back()->with('success', 1);
 	}
