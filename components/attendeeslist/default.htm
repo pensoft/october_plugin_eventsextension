@@ -22,7 +22,7 @@
 		{% for attendee in event.attendees %}
 
 		<tr>
-			<td><input type="checkbox" name="attendee" data-email="{{attendee.attendee_question_email}}" data-names="{{attendee.attendee_question_names}}" data-id="{{attendee.id}}" data-eventid="{{event.id}}"> </td>
+			<td><input type="checkbox" name="attendee" data-email="{{(attendee.attendee_question_email) ?: '' }}" data-names="{{(attendee.attendee_question_names) ?: ''}}" data-id="{{attendee.id}}" data-eventid="{{event.id}}"> </td>
 			<td>{{attendee.id}}</td>
 			{% for k, attendeeAnswers in __SELF__.getEventAttendees(event.id, attendee.id) %}
 			<td>
