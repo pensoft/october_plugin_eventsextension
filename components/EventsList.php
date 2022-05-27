@@ -1,5 +1,6 @@
 <?php namespace Pensoft\Eventsextension\Components;
 
+use Backend\Facades\BackendAuth;
 use Cms\Classes\ComponentBase;
 use Illuminate\Support\Facades\DB;
 use Pensoft\Calendar\Models\Entry;
@@ -11,30 +12,43 @@ use Pensoft\Eventsextension\Models\OrderQuestion;
  */
 class EventsList extends ComponentBase
 {
-    public function componentDetails()
-    {
-        return [
-            'name' => 'EventsList Component',
-            'description' => 'No description provided yet...'
-        ];
-    }
+	public $loggedIn;
 
-    public function defineProperties()
-    {
-        return [];
-    }
 
-	public function getEvents()
+	public function componentDetails()
 	{
-		$events = Entry::where('active', true)->orderBy('start', 'desc')->get();
+		return [
+			'name' => 'EventsList Component',
+			'description' => 'No description provided yet...'
+		];
+	}
+
+
+	public function onRun(){
+		$this->loggedIn = !empty(BackendAuth::getUser()) ? true : false;
+	}
+
+
+	public function defineProperties()
+	{
+		return [];
+	}
+
+	public function getEvents(){
+
+		if($this->loggedIn){
+			$events = Entry::where('active', true)->orderBy('start', 'desc')->get();
+		}else{
+			$events = Entry::where('active', true)->where('is_internal', 'false')->orderBy('start', 'desc')->get();
+		}
 		return $events;
 	}
 
 	public function onDuplicateEvent(){
-    	$eventId = post('event_id');
+		$eventId = post('event_id');
 
-    	if(!$eventId){
-    		return;
+		if(!$eventId){
+			return;
 		}
 
 		$originalEvent = Entry::where('id', $eventId)->first();

@@ -167,3 +167,5 @@
     - 'Removed recaptcha'
 1.0.67:
     - 'Attendees list fix'
+1.0.68:
+    - 'Hidden event option'
