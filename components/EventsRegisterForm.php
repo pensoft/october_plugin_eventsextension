@@ -3,6 +3,7 @@
 use Cms\Classes\ComponentBase;
 use Exception;
 use Multiwebinc\Recaptcha\Validators\RecaptchaValidator;
+use October\Rain\Database\Model;
 use Pensoft\Calendar\Models\Entry;
 use Pensoft\Eventsextension\Models\Attendee;
 use Pensoft\Eventsextension\Models\AttendeeAnswer;
@@ -110,23 +111,23 @@ class EventsRegisterForm extends ComponentBase
 
 			if($question['active']){
 				$answers = \Input::get($question['name']);
-				if(is_array($answers)){
-					foreach ($answers as $answer){
-						$attendeeAnswer = new AttendeeAnswer();
-						$attendeeAnswer->answer = $answer;
-						$attendeeAnswer->order = $attendeeQuestion->order;
-						$attendeeAnswer->attendee_question = $attendeeQuestion->id;
-						$attendeeAnswer->save();
-					}
-				}else{
-					$attendeeAnswer = new AttendeeAnswer();
-					$attendeeAnswer->answer = $answers;
-					$attendeeAnswer->order = $attendeeQuestion->order;
-					$attendeeAnswer->attendee_question = $attendeeQuestion->id;
-					$attendeeAnswer->save();
-				}
-
-
+				if($answers){
+                    if(is_array($answers)){
+                        foreach ($answers as $answer){
+                            $attendeeAnswer = new AttendeeAnswer();
+                            $attendeeAnswer->answer = $answer;
+                            $attendeeAnswer->order = $attendeeQuestion->order;
+                            $attendeeAnswer->attendee_question = $attendeeQuestion->id;
+                            $attendeeAnswer->save();
+                        }
+                    }else{
+                        $attendeeAnswer = new AttendeeAnswer();
+                        $attendeeAnswer->answer = $answers;
+                        $attendeeAnswer->order = $attendeeQuestion->order;
+                        $attendeeAnswer->attendee_question = $attendeeQuestion->id;
+                        $attendeeAnswer->save();
+                    }
+                }
 			}else{
 				$attendeeAnswer = new AttendeeAnswer();
 				$defaultAnswer = (new OrderAnswer())->where('order_question_id', $question['id'])->first()->toArray();

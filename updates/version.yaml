@@ -169,3 +169,5 @@
     - 'Attendees list fix'
 1.0.68:
     - 'Hidden event option'
+1.0.69:
+    - 'Multiple checkboxes no answer fix'
