@@ -171,3 +171,5 @@
     - 'Hidden event option'
 1.0.69:
     - 'Multiple checkboxes no answer fix'
+1.0.70:
+    - 'Send mail after registration'

@@ -2,8 +2,10 @@
 
 use Cms\Classes\ComponentBase;
 use Exception;
+use Illuminate\Support\Facades\Mail;
 use Multiwebinc\Recaptcha\Validators\RecaptchaValidator;
 use October\Rain\Database\Model;
+use October\Rain\Support\Facades\Flash;
 use Pensoft\Calendar\Models\Entry;
 use Pensoft\Eventsextension\Models\Attendee;
 use Pensoft\Eventsextension\Models\AttendeeAnswer;
@@ -11,6 +13,7 @@ use Pensoft\Eventsextension\Models\AttendeeQuestion;
 use Pensoft\Eventsextension\Models\OrderAnswer;
 use Pensoft\Eventsextension\Models\OrderQuestion;
 use Pensoft\Eventsextension\QuestionFormGenerator;
+use System\Models\MailSetting;
 
 /**
  * EventsRegisterForm Component
@@ -90,12 +93,15 @@ class EventsRegisterForm extends ComponentBase
 //			return \Redirect::back()->withErrors($validator);
 			throw new \ValidationException($validator);
 		}
+        //TODO uncomment
 		$attendee = new Attendee();
 		$attendee->event_id = $eventId;
 		$attendee->save();
 
+
 		foreach($allQuestions as $key => $question){
 
+            //TODO uncomment
 			//copy the questions to attendee questions
 			$attendeeQuestion = new AttendeeQuestion();
 			$attendeeQuestion->order_question_id = $question['id'];
@@ -109,6 +115,7 @@ class EventsRegisterForm extends ComponentBase
 
 			//write the answers in attendee_answers
 
+            //TODO uncomment
 			if($question['active']){
 				$answers = \Input::get($question['name']);
 				if($answers){
@@ -136,10 +143,102 @@ class EventsRegisterForm extends ComponentBase
 				$attendeeAnswer->attendee_question = $attendeeQuestion->id;
 				$attendeeAnswer->save();
 			}
-
-
 		}
+
+
+
+        $lAttendeeData = $this->getEventAttendeeData($eventId, $attendee->id);
+        $recipientEmail = $this->getAttendeeEmail($lAttendeeData);
+
+        if($recipientEmail){
+            //SEND MAIL
+            $formData = $this->formDataMailPreview($lAttendeeData);
+            $lEventsData = Entry::where('id', $eventId)->first();
+            $settings = MailSetting::instance();
+            $vars = [
+                'event_name' => $lEventsData->title,
+                'event_date' => $lEventsData->event_date,
+                'event_place' => $lEventsData->place,
+                'formData' => $formData,
+            ];
+            //send mail with registration data to user
+            Mail::send('pensoft.eventsextension::mail.finish_registration', $vars, function($message) use ($recipientEmail, $settings) {
+                $message->to($recipientEmail);
+                $message->from($settings->sender_email, $settings->sender_name);
+                $message->replyTo($settings->sender_email, $settings->sender_name);
+            });
+
+
+            if (count(Mail::failures()) > 0){
+                Flash::error('Mail not sent');
+                return;
+            }
+        }
+
+
 		return \Redirect::back()->with('message', $this->thankYouMessage);
 //		return \Redirect::back()->with('success', 1);
 	}
+
+    private function getEventAttendeeData($eventId, $attendeeId){
+
+        $orderQuestions = OrderQuestion::where('event_id', $eventId)->get()->toArray();
+        $attendee = Attendee::where('event_id', $eventId)->where('id', $attendeeId)->first();
+        $attendeeQuestions = $attendee->attendee_questions()->get()->toArray();
+        $items = [];
+        if(count($attendeeQuestions)){
+            foreach($orderQuestions as $orderQuestion) {
+
+                $orderQuestionId = $orderQuestion['id'];
+                $items[0][$orderQuestionId] = strip_tags($orderQuestion['question']);
+
+                foreach ($attendeeQuestions as $attendeeQuestion) {
+                    if($orderQuestionId == $attendeeQuestion['order_question_id']){
+//                        $isActive = $orderQuestion['active'];
+                        $answer = [];
+                        if(count($attendeeQuestion['attendee_answers'])){
+                            foreach ($attendeeQuestion['attendee_answers'] as $attendeeAnswer) {
+//                                if(!$isActive){
+//                                    $attendeeAnswer['answer'] .= ' <a href="javascript:void(0);" onclick="onLoadEditFieldForm('. $attendeeAnswer['id'] .', \'' . $attendeeAnswer['answer'] . '\', '. $orderQuestionId .');" class="btn-danger">edit</a>';
+//                                }
+                                $answer[$attendeeAnswer['id']] = $attendeeAnswer['answer'];
+                            }
+                        }
+                        $items[$attendee['id']][$orderQuestion['id']]['question'] = strip_tags($orderQuestion['question']);
+                        $items[$attendee['id']][$orderQuestion['id']]['type'] = $orderQuestion['type'];
+                        $items[$attendee['id']][$orderQuestion['id']]['name'] = $orderQuestion['name'];
+                        $items[$attendee['id']][$orderQuestion['id']]['answer'] = $answer;
+                    }
+                }
+            }
+            return $items[$attendeeId];
+        }
+
+    }
+
+
+    private function formDataMailPreview($data){
+
+        $html = '';
+
+        foreach ($data as $k => $item) {
+            $html .= '<br><b>'.$item['question'].':</b> ' . implode(',', $item['answer']);
+        }
+
+        $html .= '<p>&nbsp;</p>';
+
+        return $html;
+    }
+
+    private function getAttendeeEmail($data){
+        foreach ($data as $item) {
+            if($item['type'] == 'e' || strtolower($item['name']) == 'email'){
+                return $item['answer'];
+            }
+        }
+        return;
+    }
+
 }
+
+
