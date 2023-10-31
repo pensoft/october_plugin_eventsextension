@@ -173,3 +173,5 @@
     - 'Multiple checkboxes no answer fix'
 1.0.70:
     - 'Send mail after registration'
+1.0.71:
+    - 'Fix'

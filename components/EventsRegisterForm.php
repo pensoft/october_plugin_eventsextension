@@ -41,7 +41,11 @@ class EventsRegisterForm extends ComponentBase
     {
         $this->page['event'] = (new Entry())::where('id', $this->getEventId())->first();
         $this->page['message'] = \Session::get('message');
-        $this->thankYouMessage = $this->page['event']['thank_you_message'];
+        $this->thankYouMessage = 'Thank you!';
+        if($this->page['event']){
+            $this->thankYouMessage = $this->page['event']['thank_you_message'];
+        }
+
     }
 
 	public function getFormFields()
