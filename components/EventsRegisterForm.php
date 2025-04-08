@@ -84,10 +84,10 @@ class EventsRegisterForm extends ComponentBase
 				$arrRequired[$q['name']] .= '|email';
 			}
 		}
-//		$arrRequired['g-recaptcha-response'] = [
-//			'required',
-//			new RecaptchaValidator(),
-//		];
+		$arrRequired['g-recaptcha-response'] = [
+			'required',
+			new RecaptchaValidator(),
+		];
 
 		$validator = \Validator::make(
 			$form = \Input::all(), $arrRequired
