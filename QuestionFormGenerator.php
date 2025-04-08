@@ -113,7 +113,7 @@ class QuestionFormGenerator {
 		foreach($this->fields as $fieldset){
 			$result .= $fieldset;
 		}
-//		$result .= "<input type=\"hidden\" id=\"g-recaptcha-response\" name=\"g-recaptcha-response\" />\n";
+		$result .= "<div class=\"field\"><div class=\"g-recaptcha\" data-sitekey=\"6Le9quwqAAAAAEGhTG-XwovQtzrEj3waXsSHZMeP\"></div></div>\n";
 		$result .= "<input type=\"submit\" name=\"tAction\" value=\"${button_text}\" class=\"btn btn-primary\">\n";
 		$result .= "";
 		return $result;
